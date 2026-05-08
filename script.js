@@ -47,20 +47,22 @@ const SCRIPTS = [
 ];
 
 const COFFEE = [
-  { name:'오늘의 커피',  desc:'매일 다른 산지의 원두 — 바리스타 추천',  price:'5,000' },
-  { name:'핸드드립',     desc:'선택 원두 / 브루어 선택 가능',            price:'6,000' },
-  { name:'아메리카노',   desc:'',                                         price:'4,500' },
-  { name:'카페라테',     desc:'유기농 우유',                              price:'5,500' },
-  { name:'플랫화이트',   desc:'리스트레토 베이스',                        price:'5,500' },
-  { name:'콜드브루',     desc:'12시간 추출',                              price:'6,000' },
+  { cat: '커피' },
+  { name: '드립 커피',        desc: 'HOT / ICE', price: '5,000' },
+  { name: '디카페인 드립커피', desc: 'HOT / ICE', price: '5,500' },
+  { cat: '음료' },
+  { name: '사과농장 조카 사과주스', desc: '', price: '3,800' },
+  { name: '사과농장 조카 에이드',   desc: '', price: '5,000' },
+  { cat: '차' },
+  { name: '캐모마일', desc: 'HOT', price: '5,500' },
 ];
 
 const DRINKS = [
-  { name:'오늘의 내추럴 와인', desc:'소규모 양조장 / 매일 변경',     price:'8,000' },
-  { name:'지역 막걸리',        desc:'경북 청도 / 복순도가',           price:'6,000' },
-  { name:'크래프트 비어',      desc:'오늘의 추천 1종',                price:'7,000' },
-  { name:'사케',               desc:'제철 라벨 — 소잔 기준',         price:'9,000' },
-  { name:'논알코올 샴페인',    desc:'기포가 있는 논알코올',            price:'6,500' },
+  { cat: '와인' },
+  { name: '하우스 와인', desc: '레드 / 화이트', price: '6,000' },
+  { cat: '맥주' },
+  { name: '아사히 / 하이네켄', desc: '330ml', price: '7,900' },
+  { name: '하이네켄 제로',     desc: '330ml', price: '6,900' },
 ];
 
 const QUOTES = [
@@ -133,15 +135,16 @@ function renderScripts() {
 function renderMenu(items, elId) {
   const el = document.getElementById(elId);
   if (!el) return;
-  el.innerHTML = items.map(m => `
-    <div class="menu-item">
-      <div class="menu-item-info">
-        <p class="menu-item-name">${m.name}</p>
-        ${m.desc ? `<p class="menu-item-desc">${m.desc}</p>` : ''}
-      </div>
-      <span class="menu-item-price">${m.price}원</span>
-    </div>
-  `).join('');
+  el.innerHTML = items.map(m => m.cat
+    ? `<p class="menu-cat">${m.cat}</p>`
+    : `<div class="menu-item">
+        <div class="menu-item-info">
+          <p class="menu-item-name">${m.name}</p>
+          ${m.desc ? `<p class="menu-item-desc">${m.desc}</p>` : ''}
+        </div>
+        <span class="menu-item-price">${m.price}원</span>
+      </div>`
+  ).join('');
 }
 
 // ===== CART (PLACEHOLDER) =====

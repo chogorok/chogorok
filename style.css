@@ -669,6 +669,8 @@ section { padding: 100px 0; }
   border-bottom: 1px dashed var(--beige-dk);
 }
 .menu-item:last-child { border-bottom: none; }
+.menu-cat { font-size: .72rem; font-weight: 600; letter-spacing: .08em; color: var(--green); text-transform: uppercase; margin: 20px 0 6px; padding-bottom: 4px; border-bottom: 1px solid var(--green); }
+.menu-cat:first-child { margin-top: 0; }
 .menu-item-info { flex: 1; padding-right: 14px; }
 .menu-item-name { font-size: .92rem; font-weight: 500; color: var(--dark); margin-bottom: 1px; }
 .menu-item-desc { font-size: .74rem; color: var(--text-lt); }
