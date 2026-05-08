@@ -350,20 +350,21 @@ section { padding: 100px 0; }
   object-fit: cover;
   display: block;
 }
-.story-text { padding: 10px 0; }
+.story-text { padding: 10px 0; text-align: left; }
 .story-text h2 {
   font-family: var(--serif);
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.4;
   color: var(--dark);
-  margin-bottom: 26px;
+  margin-bottom: 32px;
+  word-break: keep-all;
 }
 .story-text p {
   font-size: .93rem;
   color: var(--text-md);
   line-height: 1.9;
-  margin-bottom: 18px;
+  margin-bottom: 28px;
 }
 .story-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 28px; }
 .tag {
