@@ -336,7 +336,7 @@ section { padding: 100px 0; }
 .story-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  gap: 60px;
   align-items: center;
 }
 .story-img {
@@ -350,21 +350,21 @@ section { padding: 100px 0; }
   object-fit: cover;
   display: block;
 }
-.story-text { padding: 10px 0; text-align: left; }
+.story-text {
+  padding: 0 40px;
+  text-align: left;
+}
 .story-text h2 {
-  font-family: var(--serif);
-  font-size: clamp(1.1rem, 2vw, 1.45rem);
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--dark);
-  margin-bottom: 32px;
+  font-size: 1.5rem;
+  line-height: 1.5;
   word-break: keep-all;
+  margin-bottom: 32px;
 }
 .story-text p {
-  font-size: .93rem;
-  color: var(--text-md);
-  line-height: 1.9;
-  margin-bottom: 28px;
+  font-size: 0.95rem;
+  line-height: 2;
+  word-break: keep-all;
+  margin-bottom: 24px;
 }
 .story-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 28px; }
 .tag {
