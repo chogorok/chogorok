@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>초고록 — 처음을 기록하는 책방</title>
+  <meta name="description" content="대구 중구의 독립서점 초고록. 데뷔작, 초판본, 소설의 첫 문장을 큐레이션합니다.">
+  <meta property="og:title" content="초고록 — 처음을 기록하는 책방">
+  <meta property="og:description" content="대구 중구 공평로8길 32, 2층. 처음을 기록하는 공간.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">
+        <span class="logo-kr">초고록</span>
+        <span class="logo-en">CHOGOROK</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">홈</a></li>
+        <li><a href="#books">도서 판매</a></li>
+        <li><a href="#scripts">희곡·대본</a></li>
+        <li><a href="#cafe">카페</a></li>
+        <li><a href="#events">이벤트</a></li>
+        <li><a href="#location">오시는 길</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section id="home" class="hero">
+    <div class="hero-bg-hanja" aria-hidden="true">草稿錄</div>
+    <div class="hero-content">
+      <p class="hero-hanja">草稿錄 · CHOGOROK</p>
+      <h1 class="hero-title">초고록</h1>
+      <p class="hero-sub">처음을 기록하는 책방</p>
+      <p class="hero-desc">
+        데뷔작이 품은 처음의 용기.<br>
+        초판본이 간직한 최초의 문장.<br>
+        당신의 첫 번째 이야기를 기억하는 공간.
+      </p>
+      <div class="hero-btns">
+        <a href="#books" class="btn btn-primary">도서 둘러보기</a>
+        <a href="#location" class="btn btn-outline">오시는 길</a>
+      </div>
+    </div>
+    <div class="hero-quote-wrap">
+      <div class="hero-quote" id="heroQuote"></div>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="meta-label">위치</span>
+        <span class="meta-val">대구 중구 공평로8길 32, 2층</span>
+      </div>
+      <div class="hero-meta-dot">·</div>
+      <div class="hero-meta-item">
+        <span class="meta-label">영업</span>
+        <span class="meta-val">12:00 – 21:00 &nbsp;(수요일 휴무)</span>
+      </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">
+      <span>scroll</span>
+      <div class="scroll-bar"></div>
+    </div>
+  </section>
+
+  <!-- ===== BRAND STORY ===== -->
+  <section class="story-section">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-img-wrap">
+          <div class="story-img">
+            <div class="story-img-inner">
+              <p class="story-quote-text">
+                "처음 쓴 문장은<br>언제나 가장 솔직하다"
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="story-text">
+          <p class="label">브랜드 스토리</p>
+          <h2>처음이 품은<br>모든 용기에 대하여</h2>
+          <p>초고록(草稿錄)은 '초고(草稿)'와 '기록(記錄)'의 합성어입니다. 세상에 나온 모든 작품의 뒤에는 두렵고 설레던 첫 번째 초고가 있었습니다.</p>
+          <p>희곡 작가이자 배우인 운영자가 직접 큐레이션한 데뷔작, 초판본, 그리고 소설의 첫 문장들. 처음을 용기 있게 써 내려간 이들의 이야기가 이 공간을 채웁니다.</p>
+          <p>당신도 언젠가 처음의 문장을 쓰게 될 날을 위해, 이 책방이 여기 있습니다.</p>
+          <div class="story-tags">
+            <span class="tag">#데뷔작</span>
+            <span class="tag">#초판본</span>
+            <span class="tag">#첫 문장</span>
+            <span class="tag">#독립출판</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PHOTO GRID ===== -->
+  <section class="grid-section" aria-label="공간 사진">
+    <div class="photo-grid">
+      <div class="pg-item pg-large">
+        <div class="pg-img" style="background: linear-gradient(160deg,#1C4A1C,#2D6A2D)">
+          <div class="pg-overlay"><p>공간 이야기</p><span>대구 중구 골목 2층</span></div>
+        </div>
+      </div>
+      <div class="pg-item">
+        <div class="pg-img" style="background: linear-gradient(160deg,#5C4033,#8B6555)">
+          <div class="pg-overlay"><p>오늘의 큐레이션</p><span>데뷔작 셀렉션</span></div>
+        </div>
+      </div>
+      <div class="pg-item">
+        <div class="pg-img" style="background: linear-gradient(160deg,#B07C29,#DAA520)">
+          <div class="pg-overlay"><p>핸드드립 커피</p><span>오늘의 원두</span></div>
+        </div>
+      </div>
+      <div class="pg-item">
+        <div class="pg-img" style="background: linear-gradient(160deg,#1C2D4A,#2D4A7A)">
+          <div class="pg-overlay"><p>희곡 낭독회</p><span>매월 셋째 주 토요일</span></div>
+        </div>
+      </div>
+      <div class="pg-item">
+        <div class="pg-img" style="background: linear-gradient(160deg,#3A2D1C,#6B5040)">
+          <div class="pg-overlay"><p>릴레이 도서</p><span>이번 달의 책</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BOOKS ===== -->
+  <section id="books" class="books-section">
+    <div class="container">
+      <div class="sec-head">
+        <p class="label">도서 판매</p>
+        <h2>처음을 쓴 책들</h2>
+        <p class="sec-desc">초고록이 직접 고른 데뷔작과 독립출판물.</p>
+      </div>
+      <div class="filter-row">
+        <button class="filter-btn active" data-filter="all">전체</button>
+        <button class="filter-btn" data-filter="debut">데뷔작</button>
+        <button class="filter-btn" data-filter="indie">독립출판</button>
+        <button class="filter-btn" data-filter="first">초판본</button>
+      </div>
+      <div class="books-grid" id="booksGrid"></div>
+      <div class="books-notice">
+        <span class="notice-icon">📦</span>
+        <div>
+          <p><strong>온라인 결제</strong>는 현재 준비 중입니다.</p>
+          <p>구매 문의: <a href="mailto:chogorok@gmail.com">chogorok@gmail.com</a> 또는 인스타그램 DM</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCRIPTS ===== -->
+  <section id="scripts" class="scripts-section">
+    <div class="container">
+      <div class="sec-head sec-head-light">
+        <p class="label label-light">희곡 · 대본</p>
+        <h2>무대 위의 첫 문장들</h2>
+        <p class="sec-desc sec-desc-light">초고록 운영자가 직접 쓴 희곡과 대본.<br>미리보기는 무료, 전체 텍스트는 유료로 제공합니다.</p>
+      </div>
+      <div class="scripts-grid" id="scriptsGrid"></div>
+      <p class="scripts-note">전체 텍스트 구매 후 PDF로 제공됩니다. 공연 상연권 문의는 별도로 연락해 주세요.</p>
+    </div>
+  </section>
+
+  <!-- ===== CAFE ===== -->
+  <section id="cafe" class="cafe-section">
+    <div class="container">
+      <div class="sec-head">
+        <p class="label">카페</p>
+        <h2>책과 함께하는 한 잔</h2>
+        <p class="sec-desc">읽는 시간을 풍요롭게 만드는 음료들.</p>
+      </div>
+      <div class="cafe-boards">
+        <div class="menu-board">
+          <div class="board-head"><div class="board-line"></div><h3>핸드드립 커피</h3><div class="board-line"></div></div>
+          <div id="coffeeMenu"></div>
+        </div>
+        <div class="cafe-divider"><span>✦</span></div>
+        <div class="menu-board">
+          <div class="board-head"><div class="board-line"></div><h3>주류 페어링</h3><div class="board-line"></div></div>
+          <div id="drinkMenu"></div>
+        </div>
+      </div>
+      <div class="cafe-note">
+        <p>✦ 오늘의 커피 원두와 주류는 매일 변경될 수 있습니다.</p>
+        <p>✦ 도서 구매 시 음료 10% 할인</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EVENTS ===== -->
+  <section id="events" class="events-section">
+    <div class="container">
+      <div class="sec-head">
+        <p class="label">이벤트</p>
+        <h2>초고록의 시간들</h2>
+        <p class="sec-desc">책방이 살아 숨쉬는 순간들.</p>
+      </div>
+      <div class="events-grid">
+
+        <div class="ev-card ev-featured">
+          <div class="ev-img" style="background:linear-gradient(160deg,#1C4A1C,#2D6A2D)">
+            <span class="ev-badge">진행중</span>
+          </div>
+          <div class="ev-body">
+            <span class="ev-type">릴레이 도서</span>
+            <h3>이번 달의 처음</h3>
+            <p>한 권의 책이 여러 손을 거쳐 읽힙니다. 읽은 후 느낀 '처음의 감각'을 책 안에 메모로 남겨 다음 독자에게 전달하는 릴레이.</p>
+            <div class="ev-details">
+              <span>📅 매월 1일 시작</span>
+              <span>👥 5명 정원</span>
+              <span>💰 무료</span>
+            </div>
+            <a href="mailto:chogorok@gmail.com" class="btn btn-primary btn-sm">신청하기</a>
+          </div>
+        </div>
+
+        <div class="ev-card">
+          <div class="ev-img" style="background:linear-gradient(160deg,#3A2D1C,#6B5040)">
+            <span class="ev-badge ev-badge-outline">대관</span>
+          </div>
+          <div class="ev-body">
+            <span class="ev-type">무대 대관</span>
+            <h3>이 공간을 당신의 무대로</h3>
+            <p>낭독회, 소품 공연, 북토크, 아티스트 토크. 초고록 2층 공간을 창작의 무대로 빌려드립니다.</p>
+            <div class="ev-details">
+              <span>🏠 최대 20인</span>
+              <span>⏰ 2시간 단위</span>
+              <span>💰 별도 문의</span>
+            </div>
+            <a href="mailto:chogorok@gmail.com" class="btn btn-outline btn-sm">문의하기</a>
+          </div>
+        </div>
+
+        <div class="ev-card">
+          <div class="ev-img" style="background:linear-gradient(160deg,#1C2D4A,#2D4A7A)">
+            <span class="ev-badge ev-badge-green">정기</span>
+          </div>
+          <div class="ev-body">
+            <span class="ev-type">희곡 낭독회</span>
+            <h3>소리 내어 읽는 밤</h3>
+            <p>배우이자 운영자가 진행하는 희곡 낭독 모임. 처음 배우를 꿈꾸는 분, 희곡을 써보고 싶은 분 모두 환영합니다.</p>
+            <div class="ev-details">
+              <span>📅 매월 셋째 토요일</span>
+              <span>👥 10명 정원</span>
+              <span>💰 10,000원</span>
+            </div>
+            <a href="mailto:chogorok@gmail.com" class="btn btn-outline btn-sm">신청하기</a>
+          </div>
+        </div>
+
+        <div class="ev-card">
+          <div class="ev-img" style="background:linear-gradient(160deg,#4A2D1C,#8B5A2D)">
+            <span class="ev-badge ev-badge-green">정기</span>
+          </div>
+          <div class="ev-body">
+            <span class="ev-type">첫 문장 쓰기 모임</span>
+            <h3>당신의 처음을 써드립니다</h3>
+            <p>글을 쓰고 싶지만 시작하지 못한 분들을 위한 워크숍. 단 하나의 첫 문장을 함께 씁니다.</p>
+            <div class="ev-details">
+              <span>📅 매월 넷째 일요일</span>
+              <span>👥 8명 정원</span>
+              <span>💰 15,000원</span>
+            </div>
+            <a href="mailto:chogorok@gmail.com" class="btn btn-outline btn-sm">신청하기</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LOCATION ===== -->
+  <section id="location" class="location-section">
+    <div class="container">
+      <div class="sec-head">
+        <p class="label">오시는 길</p>
+        <h2>처음 오시는 길도 환영합니다</h2>
+      </div>
+      <div class="location-grid">
+        <div class="map-wrap">
+          <div class="map-placeholder">
+            <div class="map-pin-icon">📍</div>
+            <p>대구 중구 공평로8길 32, 2층</p>
+            <a href="https://map.kakao.com/?q=%EB%8C%80%EA%B5%AC+%EC%A4%91%EA%B5%AC+%EA%B3%B5%ED%8F%89%EB%A1%9C8%EA%B8%B8+32" target="_blank" rel="noopener" class="btn btn-primary btn-sm">카카오맵으로 보기</a>
+          </div>
+        </div>
+        <div class="location-info">
+          <div class="loc-block">
+            <h4>📍 주소</h4>
+            <p>대구광역시 중구 공평로8길 32, 2층<br><span class="loc-sub">건물 입구에서 계단으로 2층</span></p>
+          </div>
+          <div class="loc-block">
+            <h4>🕐 영업시간</h4>
+            <div class="hours">
+              <div class="hours-row"><span>월·화·목·금·토·일</span><span>12:00 – 21:00</span></div>
+              <div class="hours-row closed"><span>수요일</span><span class="closed-text">휴무</span></div>
+            </div>
+          </div>
+          <div class="loc-block">
+            <h4>🚇 대중교통</h4>
+            <p>지하철 1호선 중앙로역 2번 출구<br>도보 약 7분</p>
+          </div>
+          <div class="loc-block">
+            <h4>📮 문의</h4>
+            <p>
+              <a href="mailto:chogorok@gmail.com">chogorok@gmail.com</a><br>
+              <a href="https://instagram.com/chogorok" target="_blank" rel="noopener">@chogorok (인스타그램)</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <p class="footer-logo-kr">초고록</p>
+          <p class="footer-logo-en">草稿錄 · CHOGOROK</p>
+          <p class="footer-tagline">처음을 기록하는 책방</p>
+        </div>
+        <div class="footer-col">
+          <h5>바로가기</h5>
+          <ul>
+            <li><a href="#books">도서 판매</a></li>
+            <li><a href="#scripts">희곡·대본</a></li>
+            <li><a href="#cafe">카페 메뉴</a></li>
+            <li><a href="#events">이벤트</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>연락처</h5>
+          <p>대구 중구 공평로8길 32, 2층</p>
+          <p>12:00 – 21:00 (수 휴무)</p>
+          <p><a href="mailto:chogorok@gmail.com">chogorok@gmail.com</a></p>
+          <p><a href="https://instagram.com/chogorok" target="_blank" rel="noopener">@chogorok</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 초고록 (CHOGOROK). All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== MODAL ===== -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="희곡 미리보기">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose" aria-label="닫기">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
