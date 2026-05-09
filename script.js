@@ -46,7 +46,7 @@ const EVENTS_DEFAULT = [
     type: '릴레이 도서', title: '이번 달의 처음',
     desc: '한 권의 책이 여러 손을 거쳐 읽힙니다. 읽은 후 느낀 \'처음의 감각\'을 책 안에 메모로 남겨 다음 독자에게 전달하는 릴레이.',
     details: ['📅 매월 1일 시작', '👥 5명 정원', '💰 무료'],
-    btn_text: '신청하기', btn_link: 'mailto:chogorok@gmail.com', btn_style: 'primary',
+    btn_text: '신청하기', btn_link: 'mailto:rlatmdtn8149@naver.com', btn_style: 'primary',
   },
   {
     featured: false, badge: '대관', badge_type: 'outline',
@@ -54,7 +54,7 @@ const EVENTS_DEFAULT = [
     type: '무대 대관', title: '이 공간을 당신의 무대로',
     desc: '낭독회, 소품 공연, 북토크, 아티스트 토크. 초고록 2층 공간을 창작의 무대로 빌려드립니다.',
     details: ['🏠 최대 20인', '⏰ 2시간 단위', '💰 별도 문의'],
-    btn_text: '문의하기', btn_link: 'mailto:chogorok@gmail.com', btn_style: 'outline',
+    btn_text: '문의하기', btn_link: 'mailto:rlatmdtn8149@naver.com', btn_style: 'outline',
   },
   {
     featured: false, badge: '정기', badge_type: 'green',
@@ -62,7 +62,7 @@ const EVENTS_DEFAULT = [
     type: '희곡 낭독회', title: '소리 내어 읽는 밤',
     desc: '배우이자 운영자가 진행하는 희곡 낭독 모임. 처음 배우를 꿈꾸는 분, 희곡을 써보고 싶은 분 모두 환영합니다.',
     details: ['📅 매월 셋째 토요일', '👥 10명 정원', '💰 10,000원'],
-    btn_text: '신청하기', btn_link: 'mailto:chogorok@gmail.com', btn_style: 'outline',
+    btn_text: '신청하기', btn_link: 'mailto:rlatmdtn8149@naver.com', btn_style: 'outline',
   },
   {
     featured: false, badge: '정기', badge_type: 'green',
@@ -70,14 +70,14 @@ const EVENTS_DEFAULT = [
     type: '첫 문장 쓰기 모임', title: '당신의 처음을 써드립니다',
     desc: '글을 쓰고 싶지만 시작하지 못한 분들을 위한 워크숍. 단 하나의 첫 문장을 함께 씁니다.',
     details: ['📅 매월 넷째 일요일', '👥 8명 정원', '💰 15,000원'],
-    btn_text: '신청하기', btn_link: 'mailto:chogorok@gmail.com', btn_style: 'outline',
+    btn_text: '신청하기', btn_link: 'mailto:rlatmdtn8149@naver.com', btn_style: 'outline',
   },
 ];
 
 const RELAY_DEFAULT = [
-  { title: '시라노 드 베르주라크', author: '에드몽 로스탕', desc: '운문으로 쓰인 5막짜리 희곡. 코가 크다는 콤플렉스를 지닌 시인 기사 시라노의 사랑 이야기.', image: '', link: 'mailto:chogorok@gmail.com', status: '가능' },
-  { title: '앵무새 죽이기',       author: '하퍼 리',       desc: '미국 남부의 작은 마을을 배경으로 인종 차별과 정의를 다룬 퓰리처상 수상작.', image: '', link: 'mailto:chogorok@gmail.com', status: '대여중' },
-  { title: '채식주의자',          author: '한강',          desc: '평범한 여성이 어느 날 갑자기 육식을 거부하면서 시작되는 세 편의 연결된 이야기.', image: '', link: 'mailto:chogorok@gmail.com', status: '마감' },
+  { title: '시라노 드 베르주라크', author: '에드몽 로스탕', desc: '운문으로 쓰인 5막짜리 희곡. 코가 크다는 콤플렉스를 지닌 시인 기사 시라노의 사랑 이야기.', image: '', link: 'mailto:rlatmdtn8149@naver.com', status: '가능' },
+  { title: '앵무새 죽이기',       author: '하퍼 리',       desc: '미국 남부의 작은 마을을 배경으로 인종 차별과 정의를 다룬 퓰리처상 수상작.', image: '', link: 'mailto:rlatmdtn8149@naver.com', status: '대여중' },
+  { title: '채식주의자',          author: '한강',          desc: '평범한 여성이 어느 날 갑자기 육식을 거부하면서 시작되는 세 편의 연결된 이야기.', image: '', link: 'mailto:rlatmdtn8149@naver.com', status: '마감' },
 ];
 
 const COFFEE = [
@@ -207,7 +207,7 @@ function mapEvents(rows) {
         priceLabel,
       ].filter(Boolean),
       btn_text:  r['버튼텍스트'] || r.btn_text  || '신청하기',
-      btn_link:  r['신청링크']   || r.btn_link  || r['버튼링크'] || 'mailto:chogorok@gmail.com',
+      btn_link:  r['신청링크']   || r.btn_link  || r['버튼링크'] || 'mailto:rlatmdtn8149@naver.com',
       btn_style: r['버튼스타일'] || r.btn_style || 'outline',
     };
   }).filter(e => e.title);
@@ -219,7 +219,7 @@ function mapRelayBooks(rows) {
     author: r['저자']    || r.author || '',
     desc:   r['설명']    || r.desc   || '',
     image:  toDriveImageUrl(r['사진URL'] || r.image || ''),
-    link:   r['신청링크'] || r.link  || 'mailto:chogorok@gmail.com',
+    link:   r['신청링크'] || r.link  || 'mailto:rlatmdtn8149@naver.com',
     status: r['대여상태'] || r.status || '가능',
   })).filter(r => r.title);
 }
@@ -401,7 +401,7 @@ function addToCart(id) {
 function buyScript(id) {
   const s = SCRIPTS.find(x => x.id === id);
   if (!s) return;
-  toast(`"${s.title}" 구매 안내\nchogorok@gmail.com으로 문의해 주세요.`);
+  toast(`"${s.title}" 구매 안내\nrlatmdtn8149@naver.com으로 문의해 주세요.`);
 }
 
 // ===== PREVIEW MODAL =====
