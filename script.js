@@ -180,7 +180,7 @@ function mapEvents(rows) {
       r.detail3 || r['상세3'] || '',
     ].filter(Boolean),
     btn_text:  r.btn_text  || r['버튼텍스트'] || '신청하기',
-    btn_link:  r.btn_link  || r['버튼링크']  || 'mailto:chogorok@gmail.com',
+    btn_link:  r.btn_link  || r['버튼링크'] || r['신청링크'] || 'mailto:chogorok@gmail.com',
     btn_style: r.btn_style || r['버튼스타일'] || 'outline',
   })).filter(e => e.title);
 }
