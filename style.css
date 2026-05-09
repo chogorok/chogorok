@@ -695,9 +695,10 @@ section { padding: 100px 0; }
   align-items: flex-start;
   justify-content: flex-end;
   padding: 16px;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: #f4f1ec;
 }
 .ev-badge {
   padding: 4px 12px;

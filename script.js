@@ -289,7 +289,7 @@ function renderEvents(events) {
   };
 
   const imgStyle = e => e.image
-    ? `background-image:url('${e.image}');background-size:cover;background-position:center;background-repeat:no-repeat`
+    ? `background-image:url('${e.image}');background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#f4f1ec`
     : `background:linear-gradient(160deg,${e.color1},${e.color2})`;
 
   const isExternal = url => url.startsWith('http');
