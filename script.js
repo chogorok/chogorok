@@ -6,7 +6,7 @@ const SHEET_BASE    = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTzHZx7Je
 const SHEET_BOOKS   = SHEET_BASE + '0';
 const SHEET_EVENTS  = SHEET_BASE + '455664417';
 const SHEET_SCRIPTS = SHEET_BASE + '2';
-const SHEET_RELAY   = SHEET_BASE + 'RELAY_GID'; // ← 릴레이 독서 시트 gid로 교체 필요
+const SHEET_RELAY   = SHEET_BASE + '1886435550';
 
 // ===== DEFAULT DATA (fallback) =====
 
