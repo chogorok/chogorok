@@ -164,6 +164,13 @@ function mapBooks(rows) {
   })).filter(b => b.title);
 }
 
+function toDriveImageUrl(url) {
+  if (!url) return '';
+  const match = url.match(/drive\.google\.com\/file\/d\/([^/?#]+)/);
+  if (match) return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+  return url;
+}
+
 function mapEvents(rows) {
   return rows.map(r => {
     const priceRaw = r['가격'] || r.price || '';
@@ -172,20 +179,23 @@ function mapEvents(rows) {
       ? (isNaN(priceNum) ? `💰 ${priceRaw}` : `💰 ${priceNum.toLocaleString()}원`)
       : '';
 
+    const 신청수 = (r['신청 현황'] || '').replace(/명$/, '').trim();
+    const 정원수 = (r['정원'] || '?').replace(/명$/, '').trim();
+
     return {
       featured:   (r.featured || r['대표']) === 'true' || (r.featured || r['대표']) === '1',
       badge:      r.badge      || r['배지']     || '',
       badge_type: r.badge_type || r['배지유형'] || '',
       color1:     r.color1     || r['색상1']    || '#1C4A1C',
       color2:     r.color2     || r['색상2']    || '#2D6A2D',
-      image:      r['사진URL'] || r.image       || '',
+      image:      toDriveImageUrl(r['사진URL'] || r.image || ''),
       type:       r['유형']    || r.type        || '',
       title:      r['제목']    || r.title       || '',
       desc:       r['설명']    || r.desc        || '',
       details: [
-        r['날짜']      ? `📅 ${r['날짜']}`                                   : '',
-        r['정원']      ? `👥 ${r['정원']} 정원`                               : '',
-        r['신청 현황'] ? `📋 ${r['신청 현황']}/${r['정원'] || '?'}명 신청`    : '',
+        r['날짜']      ? `📅 ${r['날짜']}`              : '',
+        r['정원']      ? `👥 ${정원수}명 정원`           : '',
+        신청수         ? `📋 ${신청수}/${정원수}명 신청` : '',
         priceLabel,
       ].filter(Boolean),
       btn_text:  r['버튼텍스트'] || r.btn_text  || '신청하기',
