@@ -165,24 +165,34 @@ function mapBooks(rows) {
 }
 
 function mapEvents(rows) {
-  return rows.map(r => ({
-    featured:   (r.featured || r['대표']) === 'true' || (r.featured || r['대표']) === '1',
-    badge:      r.badge      || r['배지']      || '',
-    badge_type: r.badge_type || r['배지유형']  || '',
-    color1:     r.color1     || r['색상1']     || '#1C4A1C',
-    color2:     r.color2     || r['색상2']     || '#2D6A2D',
-    type:       r.type       || r['유형']      || '',
-    title:      r.title      || r['제목']      || '',
-    desc:       r.desc       || r['설명']      || '',
-    details: [
-      r.detail1 || r['상세1'] || '',
-      r.detail2 || r['상세2'] || '',
-      r.detail3 || r['상세3'] || '',
-    ].filter(Boolean),
-    btn_text:  r.btn_text  || r['버튼텍스트'] || '신청하기',
-    btn_link:  r.btn_link  || r['버튼링크'] || r['신청링크'] || 'mailto:chogorok@gmail.com',
-    btn_style: r.btn_style || r['버튼스타일'] || 'outline',
-  })).filter(e => e.title);
+  return rows.map(r => {
+    const priceRaw = r['가격'] || r.price || '';
+    const priceNum = parseInt(priceRaw.replace(/[^0-9]/g, ''), 10);
+    const priceLabel = priceRaw
+      ? (isNaN(priceNum) ? `💰 ${priceRaw}` : `💰 ${priceNum.toLocaleString()}원`)
+      : '';
+
+    return {
+      featured:   (r.featured || r['대표']) === 'true' || (r.featured || r['대표']) === '1',
+      badge:      r.badge      || r['배지']     || '',
+      badge_type: r.badge_type || r['배지유형'] || '',
+      color1:     r.color1     || r['색상1']    || '#1C4A1C',
+      color2:     r.color2     || r['색상2']    || '#2D6A2D',
+      image:      r['사진URL'] || r.image       || '',
+      type:       r['유형']    || r.type        || '',
+      title:      r['제목']    || r.title       || '',
+      desc:       r['설명']    || r.desc        || '',
+      details: [
+        r['날짜']      ? `📅 ${r['날짜']}`                                   : '',
+        r['정원']      ? `👥 ${r['정원']} 정원`                               : '',
+        r['신청 현황'] ? `📋 ${r['신청 현황']}/${r['정원'] || '?'}명 신청`    : '',
+        priceLabel,
+      ].filter(Boolean),
+      btn_text:  r['버튼텍스트'] || r.btn_text  || '신청하기',
+      btn_link:  r['신청링크']   || r.btn_link  || r['버튼링크'] || 'mailto:chogorok@gmail.com',
+      btn_style: r['버튼스타일'] || r.btn_style || 'outline',
+    };
+  }).filter(e => e.title);
 }
 
 function mapScripts(rows) {
@@ -268,10 +278,16 @@ function renderEvents(events) {
     return 'ev-badge';
   };
 
+  const imgStyle = e => e.image
+    ? `background:url('${e.image}') center/cover no-repeat`
+    : `background:linear-gradient(160deg,${e.color1},${e.color2})`;
+
+  const isExternal = url => url.startsWith('http');
+
   grid.innerHTML = events.map(e => `
     <div class="ev-card${e.featured ? ' ev-featured' : ''}">
-      <div class="ev-img" style="background:linear-gradient(160deg,${e.color1},${e.color2})">
-        <span class="${badgeClass(e.badge_type)}">${e.badge}</span>
+      <div class="ev-img" style="${imgStyle(e)}">
+        ${e.badge ? `<span class="${badgeClass(e.badge_type)}">${e.badge}</span>` : ''}
       </div>
       <div class="ev-body">
         <span class="ev-type">${e.type}</span>
@@ -280,7 +296,7 @@ function renderEvents(events) {
         <div class="ev-details">
           ${e.details.map(d => `<span>${d}</span>`).join('')}
         </div>
-        <a href="${e.btn_link}" class="btn btn-${e.btn_style} btn-sm">${e.btn_text}</a>
+        <a href="${e.btn_link}" class="btn btn-${e.btn_style} btn-sm"${isExternal(e.btn_link) ? ' target="_blank" rel="noopener"' : ''}>${e.btn_text}</a>
       </div>
     </div>
   `).join('');
