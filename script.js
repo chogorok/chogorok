@@ -5,7 +5,7 @@
 const SHEET_BASE    = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTzHZx7Jef19FbSPTe0XPg_s0DEeeMnbNUV4SPLzY29ZCFo34Xuk9XyZhGahYi-5uoY_jT2lXCOAEtm/pub?output=csv&gid=';
 const SHEET_BOOKS   = SHEET_BASE + '0';
 const SHEET_EVENTS  = SHEET_BASE + '455664417';
-const SHEET_SCRIPTS = SHEET_BASE + '2';
+const SHEET_SCRIPTS = SHEET_BASE + '1291865144';
 const SHEET_RELAY   = SHEET_BASE + '1886435550';
 
 // ===== DEFAULT DATA (fallback) =====
