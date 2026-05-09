@@ -606,6 +606,8 @@ section { padding: 100px 0; }
   border: none;
 }
 .s-btn-paid:hover { background: var(--beige); }
+.s-btn-disabled { opacity: .45; cursor: not-allowed; }
+.s-btn-disabled:hover { background: var(--white); }
 .scripts-note {
   text-align: center;
   font-size: .83rem;

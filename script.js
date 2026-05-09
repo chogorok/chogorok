@@ -22,18 +22,9 @@ let BOOKS = [
 ];
 
 let SCRIPTS = [
-  {
-    id: 1, title: '첫 번째 겨울', subtitle: '2막 희곡', genre: '희곡', pages: 68, price: 8000, pdf: '',
-    excerpt: '"처음 네 이름을 불렀을 때,\n내 목소리가 낯설었다.\n그건 아직 내가 너를\n알지 못한다는 뜻이었다."',
-  },
-  {
-    id: 2, title: '초고 없는 세계', subtitle: '단막극', genre: '단막극', pages: 24, price: 5000, pdf: '',
-    excerpt: '"당신은 지금까지\n몇 번이나 처음이었습니까?\n그 처음들은 어디로 갔습니까?"',
-  },
-  {
-    id: 3, title: '봄을 기다리는 사람들', subtitle: '3인극', genre: '희곡', pages: 52, price: 7000, pdf: '',
-    excerpt: '"기다린다는 건\n이미 시작한 거야.\n봄이 오기 전부터\n우리는 이미 봄 속에 있었어."',
-  },
+  { id: 1, title: '첫 번째 겨울',        genre: '희곡',   desc: '"처음 네 이름을 불렀을 때, 내 목소리가 낯설었다."', pdf: '' },
+  { id: 2, title: '초고 없는 세계',       genre: '단막극', desc: '"당신은 지금까지 몇 번이나 처음이었습니까?"',        pdf: '' },
+  { id: 3, title: '봄을 기다리는 사람들', genre: '희곡',   desc: '"기다린다는 건 이미 시작한 거야."',                 pdf: '' },
 ];
 
 const EVENTS_DEFAULT = [
@@ -223,14 +214,11 @@ function mapRelayBooks(rows) {
 
 function mapScripts(rows) {
   return rows.map((r, i) => ({
-    id:       i + 1,
-    title:    r['제목']    || r.title    || '',
-    subtitle: r['부제']    || r.subtitle || '',
-    genre:    r['장르']    || r.genre    || '희곡',
-    pages:    parseInt(r['페이지'] || r.pages || '0', 10),
-    price:    parseInt(r['가격']   || r.price || '0', 10),
-    excerpt:  (r['발췌'] || r.excerpt || '').replace(/\\n/g, '\n'),
-    pdf:      r['pdf링크'] || r.pdf || '',
+    id:    i + 1,
+    title: r['제목']      || r.title || '',
+    genre: r['유형']      || r.genre || '희곡',
+    desc:  r['설명']      || r.desc  || '',
+    pdf:   r['대본 읽기'] || r.pdf   || '',
   })).filter(s => s.title);
 }
 
@@ -276,17 +264,16 @@ function renderScripts() {
   if (!grid) return;
   grid.innerHTML = SCRIPTS.map(s => {
     const btn = s.pdf
-      ? `<a href="${s.pdf}" target="_blank" rel="noopener" class="s-btn-paid">대본 구매 ₩${s.price.toLocaleString()}</a>`
-      : `<button class="s-btn-paid" onclick="buyScript(${s.id})">대본 구매 ₩${s.price.toLocaleString()}</button>`;
+      ? `<a href="${s.pdf}" target="_blank" rel="noopener" class="s-btn-paid">대본 읽기</a>`
+      : `<button class="s-btn-paid s-btn-disabled" disabled>준비 중</button>`;
     return `
     <div class="script-card">
       <div class="script-head">
-        <p class="script-genre">${s.genre} · ${s.pages}p</p>
+        <p class="script-genre">${s.genre}</p>
         <h3 class="script-title">${s.title}</h3>
-        <p class="script-subtitle">${s.subtitle}</p>
       </div>
       <div class="script-body">
-        <p class="script-excerpt">${nl(s.excerpt)}</p>
+        <p class="script-excerpt">${nl(s.desc)}</p>
         <div class="script-actions">
           ${btn}
         </div>
