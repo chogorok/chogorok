@@ -23,19 +23,16 @@ let BOOKS = [
 
 let SCRIPTS = [
   {
-    id: 1, title: '첫 번째 겨울', subtitle: '2막 희곡', genre: '희곡', pages: 68, price: 8000,
+    id: 1, title: '첫 번째 겨울', subtitle: '2막 희곡', genre: '희곡', pages: 68, price: 8000, pdf: '',
     excerpt: '"처음 네 이름을 불렀을 때,\n내 목소리가 낯설었다.\n그건 아직 내가 너를\n알지 못한다는 뜻이었다."',
-    scene: `1막 1장\n\n[무대: 빈 방. 창문 하나. 의자 둘.]\n\nA: (창밖을 보며) 처음엔 아무것도 없었어.\nB: (들어서며) 처음이 원래 그런 거잖아.\nA: 아무것도 없어서 처음인 게 아니라,\n    처음이라서 아무것도 없는 거겠지.\n\n[침묵]\n\nB: 커피 마실래?\nA: 응, 처음처럼.`,
   },
   {
-    id: 2, title: '초고 없는 세계', subtitle: '단막극', genre: '단막극', pages: 24, price: 5000,
+    id: 2, title: '초고 없는 세계', subtitle: '단막극', genre: '단막극', pages: 24, price: 5000, pdf: '',
     excerpt: '"당신은 지금까지\n몇 번이나 처음이었습니까?\n그 처음들은 어디로 갔습니까?"',
-    scene: `[무대: 아무 것도 없는 흰 공간]\n\nA: 쓰려고 했어.\nB: 그래서?\nA: 처음부터 다시 시작해야 할 것 같아서.\nB: 처음이 어딘데?\n\n[A, 오랫동안 생각한다.]\n\nA: 모르겠어. 그게 문제야.`,
   },
   {
-    id: 3, title: '봄을 기다리는 사람들', subtitle: '3인극', genre: '희곡', pages: 52, price: 7000,
+    id: 3, title: '봄을 기다리는 사람들', subtitle: '3인극', genre: '희곡', pages: 52, price: 7000, pdf: '',
     excerpt: '"기다린다는 건\n이미 시작한 거야.\n봄이 오기 전부터\n우리는 이미 봄 속에 있었어."',
-    scene: `1장\n\n[무대: 창문이 있는 방. 세 개의 의자.]\n\nA: 봄이 언제 와?\nB: 기다리면 와.\nC: 기다리는 게 이미 봄인 거야.\n\n[세 사람, 창밖을 바라본다.]`,
   },
 ];
 
@@ -227,13 +224,13 @@ function mapRelayBooks(rows) {
 function mapScripts(rows) {
   return rows.map((r, i) => ({
     id:       i + 1,
-    title:    r.title    || r['제목']    || '',
-    subtitle: r.subtitle || r['부제']    || '',
-    genre:    r.genre    || r['장르']    || '희곡',
-    pages:    parseInt(r.pages || r['페이지'] || '0', 10),
-    price:    parseInt(r.price || r['가격']   || '0', 10),
-    excerpt:  (r.excerpt || r['발췌']).replace(/\\n/g, '\n'),
-    scene:    (r.scene   || r['장면']).replace(/\\n/g, '\n'),
+    title:    r['제목']    || r.title    || '',
+    subtitle: r['부제']    || r.subtitle || '',
+    genre:    r['장르']    || r.genre    || '희곡',
+    pages:    parseInt(r['페이지'] || r.pages || '0', 10),
+    price:    parseInt(r['가격']   || r.price || '0', 10),
+    excerpt:  (r['발췌'] || r.excerpt || '').replace(/\\n/g, '\n'),
+    pdf:      r['pdf링크'] || r.pdf || '',
   })).filter(s => s.title);
 }
 
@@ -277,7 +274,11 @@ function renderBooks(filter) {
 function renderScripts() {
   const grid = document.getElementById('scriptsGrid');
   if (!grid) return;
-  grid.innerHTML = SCRIPTS.map(s => `
+  grid.innerHTML = SCRIPTS.map(s => {
+    const btn = s.pdf
+      ? `<a href="${s.pdf}" target="_blank" rel="noopener" class="s-btn-paid">대본 구매 ₩${s.price.toLocaleString()}</a>`
+      : `<button class="s-btn-paid" onclick="buyScript(${s.id})">대본 구매 ₩${s.price.toLocaleString()}</button>`;
+    return `
     <div class="script-card">
       <div class="script-head">
         <p class="script-genre">${s.genre} · ${s.pages}p</p>
@@ -287,12 +288,11 @@ function renderScripts() {
       <div class="script-body">
         <p class="script-excerpt">${nl(s.excerpt)}</p>
         <div class="script-actions">
-          <button class="s-btn-free" onclick="openPreview(${s.id})">미리보기 (무료)</button>
-          <button class="s-btn-paid" onclick="buyScript(${s.id})">전체 구매 ₩${s.price.toLocaleString()}</button>
+          ${btn}
         </div>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 // ===== RENDER EVENTS =====
