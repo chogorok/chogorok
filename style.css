@@ -737,6 +737,88 @@ section { padding: 100px 0; }
 .ev-details { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
 .ev-details span { font-size: .76rem; color: var(--text-lt); }
 
+/* ===== RELAY READING ===== */
+.relay-section { background: var(--beige); padding: 80px 0; }
+.relay-section .sec-head { margin-bottom: 48px; }
+
+.relay-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 28px;
+}
+
+.relay-card {
+  background: var(--white);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+  display: flex;
+  flex-direction: column;
+}
+.relay-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+
+.relay-img {
+  height: 220px;
+  position: relative;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f4f1ec;
+}
+
+.relay-status-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.relay-status-ok     { background: #2D6A2D; color: #fff; }
+.relay-status-rented { background: #B07C29; color: #fff; }
+.relay-status-closed { background: #7A7A7A; color: #fff; }
+
+.relay-body {
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.relay-title  { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; color: var(--dark); }
+.relay-author { font-size: .82rem; color: var(--text-lt); }
+.relay-desc   { font-size: .85rem; color: var(--text-md); line-height: 1.65; margin-top: 4px; flex: 1; }
+
+.relay-btn {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 9px 20px;
+  border-radius: var(--r);
+  font-size: .85rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  transition: var(--t);
+  width: 100%;
+}
+.relay-btn-primary { background: var(--green); color: #fff; }
+.relay-btn-primary:hover { background: var(--green-dk); }
+.relay-btn-outline { background: transparent; color: var(--green); border: 1.5px solid var(--green); }
+.relay-btn-outline:hover { background: var(--green-pale); }
+.relay-btn-closed  { background: var(--beige-md); color: var(--text-lt); cursor: not-allowed; }
+
+.relay-note {
+  margin-top: 36px;
+  font-size: .83rem;
+  color: var(--text-lt);
+  text-align: center;
+}
+.relay-note a { color: var(--green); text-decoration: underline; }
+
 /* ===== LOCATION ===== */
 .location-section { background: var(--white); }
 .location-grid {

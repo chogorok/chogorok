@@ -2,9 +2,11 @@
 
 // ===== SHEET URLs =====
 
-const SHEET_BOOKS   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTzHZx7Jef19FbSPTe0XPg_s0DEeeMnbNUV4SPLzY29ZCFo34Xuk9XyZhGahYi-5uoY_jT2lXCOAEtm/pub?output=csv&gid=0';
-const SHEET_EVENTS  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTzHZx7Jef19FbSPTe0XPg_s0DEeeMnbNUV4SPLzY29ZCFo34Xuk9XyZhGahYi-5uoY_jT2lXCOAEtm/pub?output=csv&gid=455664417';
-const SHEET_SCRIPTS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTzHZx7Jef19FbSPTe0XPg_s0DEeeMnbNUV4SPLzY29ZCFo34Xuk9XyZhGahYi-5uoY_jT2lXCOAEtm/pub?output=csv&gid=2';
+const SHEET_BASE    = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTzHZx7Jef19FbSPTe0XPg_s0DEeeMnbNUV4SPLzY29ZCFo34Xuk9XyZhGahYi-5uoY_jT2lXCOAEtm/pub?output=csv&gid=';
+const SHEET_BOOKS   = SHEET_BASE + '0';
+const SHEET_EVENTS  = SHEET_BASE + '455664417';
+const SHEET_SCRIPTS = SHEET_BASE + '2';
+const SHEET_RELAY   = SHEET_BASE + 'RELAY_GID'; // ← 릴레이 독서 시트 gid로 교체 필요
 
 // ===== DEFAULT DATA (fallback) =====
 
@@ -70,6 +72,12 @@ const EVENTS_DEFAULT = [
     details: ['📅 매월 넷째 일요일', '👥 8명 정원', '💰 15,000원'],
     btn_text: '신청하기', btn_link: 'mailto:chogorok@gmail.com', btn_style: 'outline',
   },
+];
+
+const RELAY_DEFAULT = [
+  { title: '시라노 드 베르주라크', author: '에드몽 로스탕', desc: '운문으로 쓰인 5막짜리 희곡. 코가 크다는 콤플렉스를 지닌 시인 기사 시라노의 사랑 이야기.', image: '', link: 'mailto:chogorok@gmail.com', status: '가능' },
+  { title: '앵무새 죽이기',       author: '하퍼 리',       desc: '미국 남부의 작은 마을을 배경으로 인종 차별과 정의를 다룬 퓰리처상 수상작.', image: '', link: 'mailto:chogorok@gmail.com', status: '대여중' },
+  { title: '채식주의자',          author: '한강',          desc: '평범한 여성이 어느 날 갑자기 육식을 거부하면서 시작되는 세 편의 연결된 이야기.', image: '', link: 'mailto:chogorok@gmail.com', status: '마감' },
 ];
 
 const COFFEE = [
@@ -205,6 +213,17 @@ function mapEvents(rows) {
   }).filter(e => e.title);
 }
 
+function mapRelayBooks(rows) {
+  return rows.map(r => ({
+    title:  r['제목']    || r.title  || '',
+    author: r['저자']    || r.author || '',
+    desc:   r['설명']    || r.desc   || '',
+    image:  toDriveImageUrl(r['사진URL'] || r.image || ''),
+    link:   r['신청링크'] || r.link  || 'mailto:chogorok@gmail.com',
+    status: r['대여상태'] || r.status || '가능',
+  })).filter(r => r.title);
+}
+
 function mapScripts(rows) {
   return rows.map((r, i) => ({
     id:       i + 1,
@@ -310,6 +329,45 @@ function renderEvents(events) {
       </div>
     </div>
   `).join('');
+}
+
+// ===== RENDER RELAY BOOKS =====
+
+function renderRelayBooks(books) {
+  const grid = document.getElementById('relayGrid');
+  if (!grid) return;
+
+  const STATUS = {
+    '가능':   { label: '대여 가능', cls: 'relay-status-ok',     btnText: '신청하기', btnCls: 'relay-btn-primary' },
+    '대여중': { label: '대여 중',   cls: 'relay-status-rented',  btnText: '예약하기', btnCls: 'relay-btn-outline' },
+    '마감':   { label: '예약 마감', cls: 'relay-status-closed',  btnText: '마감',     btnCls: 'relay-btn-closed'  },
+  };
+
+  const imgStyle = b => b.image
+    ? `background-image:url('${b.image}');background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#f4f1ec`
+    : `background:linear-gradient(160deg,#2D4A2D,#3D7A3D)`;
+
+  grid.innerHTML = books.map(b => {
+    const s = STATUS[b.status] || STATUS['마감'];
+    const isClosed = b.status === '마감';
+    const isExternal = b.link.startsWith('http');
+    const btnAttr = isExternal ? ' target="_blank" rel="noopener"' : '';
+
+    return `
+      <div class="relay-card">
+        <div class="relay-img" style="${imgStyle(b)}">
+          <span class="relay-status-badge ${s.cls}">${s.label}</span>
+        </div>
+        <div class="relay-body">
+          <h3 class="relay-title">${b.title}</h3>
+          <p class="relay-author">${b.author}</p>
+          <p class="relay-desc">${b.desc}</p>
+          ${isClosed
+            ? `<button class="relay-btn relay-btn-closed" disabled>마감</button>`
+            : `<a href="${b.link}" class="relay-btn ${s.btnCls}"${btnAttr}>${s.btnText}</a>`}
+        </div>
+      </div>`;
+  }).join('');
 }
 
 // ===== RENDER CAFE MENU =====
@@ -470,14 +528,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderBooks('all');
   renderScripts();
   renderEvents(EVENTS_DEFAULT);
+  renderRelayBooks(RELAY_DEFAULT);
   renderMenu(COFFEE, 'coffeeMenu');
   renderMenu(DRINKS, 'drinkMenu');
 
   // 2. 구글 시트 CSV 병렬 fetch
-  const [booksCSV, eventsCSV, scriptsCSV] = await Promise.all([
+  const [booksCSV, eventsCSV, scriptsCSV, relayCSV] = await Promise.all([
     fetchCSV(SHEET_BOOKS),
     fetchCSV(SHEET_EVENTS),
     fetchCSV(SHEET_SCRIPTS),
+    fetchCSV(SHEET_RELAY),
   ]);
 
   // 3. 도서 업데이트
@@ -510,7 +570,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // 6. 스크롤 애니메이션 관찰
+  // 6. 릴레이 독서 업데이트
+  if (relayCSV) {
+    const rows = parseCSV(relayCSV);
+    const mapped = mapRelayBooks(rows);
+    if (mapped.length) renderRelayBooks(mapped);
+  }
+
+  // 8. 스크롤 애니메이션 관찰
   document.querySelectorAll('.story-grid, .ev-card, .menu-board, .location-grid').forEach(el => {
     el.classList.add('fade-up');
     io.observe(el);
