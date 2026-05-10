@@ -221,15 +221,27 @@ function mapScripts(rows) {
 
 // ===== RENDER BOOKS =====
 
-function renderBooks() {
+const BOOKS_PER_PAGE = 8;
+let bookPage = 0;
+
+function renderBooks(dir = 0) {
   const grid = document.getElementById('booksGrid');
   if (!grid) return;
+
+  const totalPages = Math.max(1, Math.ceil(BOOKS.length / BOOKS_PER_PAGE));
+  bookPage = Math.max(0, Math.min(bookPage, totalPages - 1));
+  const pageBooks = BOOKS.slice(bookPage * BOOKS_PER_PAGE, (bookPage + 1) * BOOKS_PER_PAGE);
 
   const coverStyle = b => b.image
     ? `background-image:url('${b.image}');background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#f4f1ec`
     : `background:linear-gradient(155deg,${b.c[0]},${b.c[1]})`;
 
-  grid.innerHTML = BOOKS.map(b => `
+  // 슬라이드 애니메이션
+  const slideClass = dir > 0 ? 'slide-from-right' : dir < 0 ? 'slide-from-left' : '';
+  grid.className = `books-grid ${slideClass}`;
+  void grid.offsetWidth; // reflow
+
+  grid.innerHTML = pageBooks.map(b => `
     <div class="book-card fade-up">
       <div class="book-cover" style="${coverStyle(b)}">
         <div class="book-spine"></div>
@@ -251,9 +263,24 @@ function renderBooks() {
 
   requestAnimationFrame(() => {
     grid.querySelectorAll('.fade-up').forEach((el, i) => {
-      setTimeout(() => el.classList.add('in'), i * 70);
+      setTimeout(() => el.classList.add('in'), i * 60);
     });
   });
+
+  // 페이지네이션 업데이트
+  const prev = document.getElementById('booksPrev');
+  const next = document.getElementById('booksNext');
+  const indicator = document.getElementById('booksPageIndicator');
+  const pagination = document.getElementById('booksPagination');
+  if (prev) prev.disabled = bookPage === 0;
+  if (next) next.disabled = bookPage >= totalPages - 1;
+  if (indicator) indicator.textContent = totalPages > 1 ? `${bookPage + 1} / ${totalPages}` : '';
+  if (pagination) pagination.style.display = totalPages <= 1 ? 'none' : 'flex';
+}
+
+function changeBookPage(dir) {
+  bookPage += dir;
+  renderBooks(dir);
 }
 
 // ===== RENDER SCRIPTS =====
