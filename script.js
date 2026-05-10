@@ -221,7 +221,7 @@ function mapScripts(rows) {
 
 // ===== RENDER BOOKS =====
 
-const BOOKS_PER_PAGE = 4;
+const BOOKS_PER_PAGE = 8;
 let bookPage = 0;
 
 function renderBooks(dir = 0) {
