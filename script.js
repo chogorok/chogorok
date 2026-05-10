@@ -146,17 +146,14 @@ async function fetchCSV(url) {
 
 function mapBooks(rows) {
   return rows.map((r, i) => ({
-    id: i + 1,
-    title:  r.title  || r['제목']  || '',
-    author: r.author || r['저자']  || '',
-    price:  parseInt(r.price || r['가격'] || '0', 10),
-    cat:    r.cat    || r['분류']  || 'indie',
-    tag:    r.tag    || r['태그']  || '',
-    desc:   r.desc   || r['설명']  || '',
-    c: [
-      r.color1 || r['색상1'] || DEFAULT_COLORS[i % DEFAULT_COLORS.length][0],
-      r.color2 || r['색상2'] || DEFAULT_COLORS[i % DEFAULT_COLORS.length][1],
-    ],
+    id:    i + 1,
+    title: r['제목']   || r.title  || '',
+    author:r['작가']   || r['저자'] || r.author || '',
+    price: parseInt(r['가격'] || r.price || '0', 10),
+    cat:   r['카테고리'] || r.cat  || '독립출판',
+    desc:  r['설명']   || r.desc  || '',
+    image: toDriveImageUrl(r['사진URL'] || r.image || ''),
+    c: DEFAULT_COLORS[i % DEFAULT_COLORS.length],
   })).filter(b => b.title);
 }
 
@@ -224,27 +221,29 @@ function mapScripts(rows) {
 
 // ===== RENDER BOOKS =====
 
-function renderBooks(filter) {
+function renderBooks() {
   const grid = document.getElementById('booksGrid');
   if (!grid) return;
-  const list = filter === 'all' ? BOOKS : BOOKS.filter(b => b.cat === filter);
 
-  grid.innerHTML = list.map(b => `
-    <div class="book-card fade-up" data-cat="${b.cat}">
-      <div class="book-cover" style="background:linear-gradient(155deg,${b.c[0]},${b.c[1]})">
+  const coverStyle = b => b.image
+    ? `background-image:url('${b.image}');background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#f4f1ec`
+    : `background:linear-gradient(155deg,${b.c[0]},${b.c[1]})`;
+
+  grid.innerHTML = BOOKS.map(b => `
+    <div class="book-card fade-up">
+      <div class="book-cover" style="${coverStyle(b)}">
         <div class="book-spine"></div>
-        <div class="book-cover-inner">
+        ${!b.image ? `<div class="book-cover-inner">
           <p class="book-cover-title">${b.title}</p>
           <p class="book-cover-author">${b.author}</p>
-        </div>
-        <span class="book-badge">${b.tag}</span>
+        </div>` : ''}
       </div>
       <div class="book-info">
         <p class="book-info-title">${b.title}</p>
-        <p class="book-info-meta">${b.author} · ${b.desc}</p>
+        <p class="book-info-meta">${b.author}</p>
+        <p class="book-info-desc">${b.desc}</p>
         <div class="book-footer">
           <span class="book-price">₩${b.price.toLocaleString()}</span>
-          <button class="book-btn" onclick="addToCart(${b.id})">담기</button>
         </div>
       </div>
     </div>
@@ -475,15 +474,6 @@ document.querySelectorAll('.nav-links a').forEach(a => {
   });
 });
 
-// ===== FILTER =====
-
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', function () {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    renderBooks(this.dataset.filter);
-  });
-});
 
 // ===== MODAL CLOSE =====
 
@@ -512,7 +502,7 @@ function nl(str) { return (str || '').replace(/\n/g, '<br>'); }
 
 document.addEventListener('DOMContentLoaded', async () => {
   // 1. 먼저 기본 데이터로 초기 렌더링
-  renderBooks('all');
+  renderBooks();
   renderScripts();
   renderEvents(EVENTS_DEFAULT);
   renderRelayBooks(RELAY_DEFAULT);
@@ -533,10 +523,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const mapped = mapBooks(rows);
     if (mapped.length) {
       BOOKS = mapped;
-      renderBooks('all');
-      // 활성화된 필터 버튼에 맞게 재렌더
-      const activeBtn = document.querySelector('.filter-btn.active');
-      if (activeBtn) renderBooks(activeBtn.dataset.filter);
+      renderBooks();
     }
   }
 

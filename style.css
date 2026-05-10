@@ -500,7 +500,8 @@ section { padding: 100px 0; }
   margin-bottom: 3px;
   line-height: 1.35;
 }
-.book-info-meta { font-size: .76rem; color: var(--text-lt); margin-bottom: 12px; }
+.book-info-meta { font-size: .76rem; color: var(--text-lt); margin-bottom: 6px; }
+.book-info-desc { font-size: .8rem; color: var(--text-md); line-height: 1.6; margin-bottom: 10px; }
 .book-footer { display: flex; align-items: center; justify-content: space-between; }
 .book-price { font-size: .92rem; font-weight: 700; color: var(--green); }
 .book-btn {
