@@ -1107,11 +1107,12 @@ section { padding: 100px 0; }
 }
 
 @media (max-width: 768px) {
-  .relay-grid { grid-template-columns: 1fr; }
+  .relay-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
 }
 
 @media (max-width: 480px) {
   .books-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .relay-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .scripts-grid { grid-template-columns: 1fr; }
   .photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 140px 140px 140px; }
   .hero-sub::before, .hero-sub::after { display: none; }

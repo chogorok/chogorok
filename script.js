@@ -221,16 +221,17 @@ function mapScripts(rows) {
 
 // ===== RENDER BOOKS =====
 
-const BOOKS_PER_PAGE = 8;
+function getBooksPerPage() { return window.innerWidth <= 480 ? 4 : 8; }
 let bookPage = 0;
 
 function renderBooks(dir = 0) {
   const grid = document.getElementById('booksGrid');
   if (!grid) return;
 
-  const totalPages = Math.max(1, Math.ceil(BOOKS.length / BOOKS_PER_PAGE));
+  const perPage = getBooksPerPage();
+  const totalPages = Math.max(1, Math.ceil(BOOKS.length / perPage));
   bookPage = Math.max(0, Math.min(bookPage, totalPages - 1));
-  const pageBooks = BOOKS.slice(bookPage * BOOKS_PER_PAGE, (bookPage + 1) * BOOKS_PER_PAGE);
+  const pageBooks = BOOKS.slice(bookPage * perPage, (bookPage + 1) * perPage);
 
   const coverStyle = b => b.image
     ? `background-image:url('${b.image}');background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#f4f1ec`
@@ -346,7 +347,7 @@ function renderEvents(events) {
 
 // ===== RENDER RELAY BOOKS =====
 
-const RELAY_PER_PAGE = 3;
+function getRelayPerPage() { return window.innerWidth <= 768 ? 2 : 3; }
 let relayPage = 0;
 let relayBooks = [];
 
@@ -357,9 +358,10 @@ function renderRelayBooks(books, dir = 0) {
   const grid = document.getElementById('relayGrid');
   if (!grid) return;
 
-  const totalPages = Math.max(1, Math.ceil(relayBooks.length / RELAY_PER_PAGE));
+  const perPage = getRelayPerPage();
+  const totalPages = Math.max(1, Math.ceil(relayBooks.length / perPage));
   relayPage = Math.max(0, Math.min(relayPage, totalPages - 1));
-  const pageBooks = relayBooks.slice(relayPage * RELAY_PER_PAGE, (relayPage + 1) * RELAY_PER_PAGE);
+  const pageBooks = relayBooks.slice(relayPage * perPage, (relayPage + 1) * perPage);
 
   const STATUS = {
     '가능':   { label: '대여 가능', cls: 'relay-status-ok',     btnText: '신청하기', btnCls: 'relay-btn-primary' },
@@ -505,6 +507,16 @@ function rotateQuote() {
 // ===== NAV =====
 
 const navbar = document.getElementById('navbar');
+
+// 화면 크기 변경 시 페이지당 항목 수가 달라지면 재렌더
+let _lastBooksBreak = getBooksPerPage();
+let _lastRelayBreak = getRelayPerPage();
+window.addEventListener('resize', () => {
+  const nb = getBooksPerPage();
+  const nr = getRelayPerPage();
+  if (nb !== _lastBooksBreak) { _lastBooksBreak = nb; bookPage = 0; renderBooks(); }
+  if (nr !== _lastRelayBreak) { _lastRelayBreak = nr; relayPage = 0; renderRelayBooks(null); }
+}, { passive: true });
 
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 70);
