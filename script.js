@@ -311,9 +311,23 @@ function renderScripts() {
 
 // ===== RENDER EVENTS =====
 
-function renderEvents(events) {
+const EVENTS_PER_PAGE = 4;
+let eventPage = 0;
+let eventsData = [];
+
+function changeEventPage(dir) {
+  eventPage += dir;
+  renderEvents(null, dir);
+}
+
+function renderEvents(events, dir = 0) {
+  if (Array.isArray(events)) eventsData = events;
   const grid = document.getElementById('eventsGrid');
   if (!grid) return;
+
+  const totalPages = Math.max(1, Math.ceil(eventsData.length / EVENTS_PER_PAGE));
+  eventPage = Math.max(0, Math.min(eventPage, totalPages - 1));
+  const pageEvents = eventsData.slice(eventPage * EVENTS_PER_PAGE, (eventPage + 1) * EVENTS_PER_PAGE);
 
   const badgeClass = type => {
     if (type === 'outline') return 'ev-badge ev-badge-outline';
@@ -327,7 +341,7 @@ function renderEvents(events) {
 
   const isExternal = url => url.startsWith('http');
 
-  grid.innerHTML = events.map(e => `
+  grid.innerHTML = pageEvents.map(e => `
     <div class="ev-card${e.featured ? ' ev-featured' : ''}">
       <div class="ev-img" style="${imgStyle(e)}">
         ${e.badge ? `<span class="${badgeClass(e.badge_type)}">${e.badge}</span>` : ''}
@@ -343,11 +357,20 @@ function renderEvents(events) {
       </div>
     </div>
   `).join('');
+
+  const prev = document.getElementById('eventsPrev');
+  const next = document.getElementById('eventsNext');
+  const indicator = document.getElementById('eventsPageIndicator');
+  const pagination = document.getElementById('eventsPagination');
+  if (prev) prev.disabled = eventPage === 0;
+  if (next) next.disabled = eventPage >= totalPages - 1;
+  if (indicator) indicator.textContent = totalPages > 1 ? `${eventPage + 1} / ${totalPages}` : '';
+  if (pagination) pagination.style.display = totalPages <= 1 ? 'none' : 'flex';
 }
 
 // ===== RENDER RELAY BOOKS =====
 
-function getRelayPerPage() { return window.innerWidth <= 768 ? 2 : 3; }
+function getRelayPerPage() { return 2; }
 let relayPage = 0;
 let relayBooks = [];
 
