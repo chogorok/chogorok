@@ -1119,6 +1119,31 @@ section { padding: 100px 0; }
   .relay-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .events-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .events-pagination { display: flex; }
+
+  /* 릴레이 독서 — 모바일 설명 줄임 */
+  .relay-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .relay-title { font-size: .92rem; }
+  .relay-author { font-size: .76rem; }
+
+  /* 이벤트 — 모바일 설명 줄임 */
+  .ev-body p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .ev-body h3 { font-size: .98rem; }
+  .ev-details { gap: 6px; margin-bottom: 12px; }
+  .ev-details span { font-size: .7rem; }
+  .ev-body { padding: 14px; }
+  .relay-body { padding: 14px 14px 16px; }
+  .relay-img { height: 160px; }
+  .ev-img { height: 140px; }
 }
 
 @media (max-width: 480px) {
