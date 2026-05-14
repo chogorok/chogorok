@@ -110,6 +110,11 @@
         <p class="sec-desc">한 권의 책에 익명의 독자가 기록을 남기고,<br>그 기록에 다음 독자가 답하는 릴레이 독서입니다.</p>
       </div>
       <div class="relay-grid" id="relayGrid"></div>
+      <div class="relay-pagination" id="relayPagination">
+        <button class="relay-page-btn" id="relayPrev" onclick="changeRelayPage(-1)">&#8592;</button>
+        <span class="relay-page-indicator" id="relayPageIndicator"></span>
+        <button class="relay-page-btn" id="relayNext" onclick="changeRelayPage(1)">&#8594;</button>
+      </div>
       <p class="relay-note">📌 대여 기간은 1주이며, 반납 후 다음 예약자에게 전달됩니다. 문의: <a href="mailto:rlatmdtn8149@naver.com">rlatmdtn8149@naver.com</a></p>
     </div>
   </section>

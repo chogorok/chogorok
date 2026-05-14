@@ -346,9 +346,20 @@ function renderEvents(events) {
 
 // ===== RENDER RELAY BOOKS =====
 
-function renderRelayBooks(books) {
+const RELAY_PER_PAGE = 3;
+let relayPage = 0;
+let relayBooks = [];
+
+function renderRelayBooks(books, dir = 0) {
+  // books 인자가 배열이면 데이터 업데이트, 없으면 현재 데이터 재렌더
+  if (Array.isArray(books)) relayBooks = books;
+
   const grid = document.getElementById('relayGrid');
   if (!grid) return;
+
+  const totalPages = Math.max(1, Math.ceil(relayBooks.length / RELAY_PER_PAGE));
+  relayPage = Math.max(0, Math.min(relayPage, totalPages - 1));
+  const pageBooks = relayBooks.slice(relayPage * RELAY_PER_PAGE, (relayPage + 1) * RELAY_PER_PAGE);
 
   const STATUS = {
     '가능':   { label: '대여 가능', cls: 'relay-status-ok',     btnText: '신청하기', btnCls: 'relay-btn-primary' },
@@ -360,7 +371,12 @@ function renderRelayBooks(books) {
     ? `background-image:url('${b.image}');background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#f4f1ec`
     : `background:linear-gradient(160deg,#2D4A2D,#3D7A3D)`;
 
-  grid.innerHTML = books.map(b => {
+  // 슬라이드 애니메이션
+  const slideClass = dir > 0 ? 'relay-slide-right' : dir < 0 ? 'relay-slide-left' : '';
+  grid.className = `relay-grid ${slideClass}`;
+  void grid.offsetWidth;
+
+  grid.innerHTML = pageBooks.map(b => {
     const s = STATUS[b.status] || STATUS['마감'];
     const isClosed = b.status === '마감';
     const isExternal = b.link.startsWith('http');
@@ -381,6 +397,21 @@ function renderRelayBooks(books) {
         </div>
       </div>`;
   }).join('');
+
+  // 페이지네이션 업데이트
+  const prev = document.getElementById('relayPrev');
+  const next = document.getElementById('relayNext');
+  const indicator = document.getElementById('relayPageIndicator');
+  const pagination = document.getElementById('relayPagination');
+  if (prev) prev.disabled = relayPage === 0;
+  if (next) next.disabled = relayPage >= totalPages - 1;
+  if (indicator) indicator.textContent = totalPages > 1 ? `${relayPage + 1} / ${totalPages}` : '';
+  if (pagination) pagination.style.display = totalPages <= 1 ? 'none' : 'flex';
+}
+
+function changeRelayPage(dir) {
+  relayPage += dir;
+  renderRelayBooks(null, dir);
 }
 
 // ===== RENDER CAFE MENU =====
