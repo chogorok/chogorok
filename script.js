@@ -350,7 +350,8 @@ function renderEvents(events, dir = 0) {
       <div class="ev-body">
         <span class="ev-type">${e.type}</span>
         <h3>${e.title}</h3>
-        <p>${e.desc}</p>
+        <p class="ev-desc desc-clamped">${e.desc}</p>
+        <button class="desc-toggle" onclick="toggleDesc(this)">더보기</button>
         <div class="ev-details">
           ${e.details.map(d => `<span>${d}</span>`).join('')}
         </div>
@@ -416,7 +417,8 @@ function renderRelayBooks(books, dir = 0) {
         <div class="relay-body">
           <h3 class="relay-title">${b.title}</h3>
           <p class="relay-author">${b.author}</p>
-          <p class="relay-desc">${b.desc}</p>
+          <p class="relay-desc desc-clamped">${b.desc}</p>
+          <button class="desc-toggle" onclick="toggleDesc(this)">더보기</button>
           ${isClosed
             ? `<button class="relay-btn relay-btn-closed" disabled>마감</button>`
             : `<a href="${b.link}" class="relay-btn ${s.btnCls}"${btnAttr}>${s.btnText}</a>`}
@@ -590,6 +592,14 @@ const io = new IntersectionObserver(entries => {
     }
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+// ===== 더보기 토글 =====
+
+function toggleDesc(btn) {
+  const desc = btn.previousElementSibling;
+  const isClamped = desc.classList.toggle('desc-clamped');
+  btn.textContent = isClamped ? '더보기' : '접기';
+}
 
 // ===== UTILS =====
 

@@ -769,6 +769,20 @@ section { padding: 100px 0; }
 .ev-details { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
 .ev-details span { font-size: .76rem; color: var(--text-lt); }
 
+/* 더보기 토글 버튼 — 데스크탑에서 숨김, 모바일에서만 표시 */
+.desc-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--green);
+  font-size: .78rem;
+  font-weight: 600;
+  padding: 4px 0 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+.desc-toggle:hover { text-decoration: underline; }
+
 /* 이벤트 페이지네이션 — 모바일에서만 표시 */
 .events-pagination {
   display: none;
@@ -1120,23 +1134,16 @@ section { padding: 100px 0; }
   .events-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .events-pagination { display: flex; }
 
-  /* 릴레이 독서 — 모바일 설명 줄임 */
-  .relay-desc {
+  /* 릴레이·이벤트 — 모바일 설명 줄임 & 더보기 버튼 */
+  .desc-clamped {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  .desc-toggle { display: inline-block; }
   .relay-title { font-size: .92rem; }
   .relay-author { font-size: .76rem; }
-
-  /* 이벤트 — 모바일 설명 줄임 */
-  .ev-body p {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
   .ev-body h3 { font-size: .98rem; }
   .ev-details { gap: 6px; margin-bottom: 12px; }
   .ev-details span { font-size: .7rem; }
