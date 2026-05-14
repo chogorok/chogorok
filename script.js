@@ -311,7 +311,7 @@ function renderScripts() {
 
 // ===== RENDER EVENTS =====
 
-const EVENTS_PER_PAGE = 4;
+function getEventsPerPage() { return window.innerWidth <= 768 ? 4 : Infinity; }
 let eventPage = 0;
 let eventsData = [];
 
@@ -325,9 +325,10 @@ function renderEvents(events, dir = 0) {
   const grid = document.getElementById('eventsGrid');
   if (!grid) return;
 
-  const totalPages = Math.max(1, Math.ceil(eventsData.length / EVENTS_PER_PAGE));
+  const perPage = getEventsPerPage();
+  const totalPages = Math.max(1, Math.ceil(eventsData.length / perPage));
   eventPage = Math.max(0, Math.min(eventPage, totalPages - 1));
-  const pageEvents = eventsData.slice(eventPage * EVENTS_PER_PAGE, (eventPage + 1) * EVENTS_PER_PAGE);
+  const pageEvents = perPage === Infinity ? eventsData : eventsData.slice(eventPage * perPage, (eventPage + 1) * perPage);
 
   const badgeClass = type => {
     if (type === 'outline') return 'ev-badge ev-badge-outline';
@@ -370,7 +371,7 @@ function renderEvents(events, dir = 0) {
 
 // ===== RENDER RELAY BOOKS =====
 
-function getRelayPerPage() { return 2; }
+function getRelayPerPage() { return window.innerWidth <= 768 ? 2 : 3; }
 let relayPage = 0;
 let relayBooks = [];
 
@@ -534,11 +535,14 @@ const navbar = document.getElementById('navbar');
 // 화면 크기 변경 시 페이지당 항목 수가 달라지면 재렌더
 let _lastBooksBreak = getBooksPerPage();
 let _lastRelayBreak = getRelayPerPage();
+let _lastEventsBreak = getEventsPerPage();
 window.addEventListener('resize', () => {
   const nb = getBooksPerPage();
   const nr = getRelayPerPage();
-  if (nb !== _lastBooksBreak) { _lastBooksBreak = nb; bookPage = 0; renderBooks(); }
-  if (nr !== _lastRelayBreak) { _lastRelayBreak = nr; relayPage = 0; renderRelayBooks(null); }
+  const ne = getEventsPerPage();
+  if (nb !== _lastBooksBreak)  { _lastBooksBreak  = nb; bookPage  = 0; renderBooks(); }
+  if (nr !== _lastRelayBreak)  { _lastRelayBreak  = nr; relayPage = 0; renderRelayBooks(null); }
+  if (ne !== _lastEventsBreak) { _lastEventsBreak = ne; eventPage = 0; renderEvents(null); }
 }, { passive: true });
 
 window.addEventListener('scroll', () => {
