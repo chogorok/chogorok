@@ -289,51 +289,27 @@ function changeBookPage(dir) {
 let scriptPage = 0;
 
 function isMobile() { return window.innerWidth <= 768; }
+function getScriptsPerPage() { return isMobile() ? 1 : 3; }
 
 function renderScripts(dir = 0) {
   const grid = document.getElementById('scriptsGrid');
   const pagination = document.getElementById('scriptsPagination');
   if (!grid) return;
 
-  const mobile = isMobile();
-
-  if (!mobile) {
-    // 데스크탑: 전체 표시, 페이지네이션 숨김
-    grid.className = 'scripts-grid';
-    grid.innerHTML = SCRIPTS.map(s => {
-      const btn = s.pdf
-        ? `<a href="${s.pdf}" target="_blank" rel="noopener" class="s-btn-paid">대본 읽기</a>`
-        : `<button class="s-btn-paid s-btn-disabled" disabled>준비 중</button>`;
-      return `
-      <div class="script-card">
-        <div class="script-head">
-          <p class="script-genre">${s.genre}</p>
-          <h3 class="script-title">${s.title}</h3>
-        </div>
-        <div class="script-body">
-          <p class="script-excerpt">${nl(s.desc)}</p>
-          <div class="script-actions">${btn}</div>
-        </div>
-      </div>`;
-    }).join('');
-    if (pagination) pagination.style.display = 'none';
-    return;
-  }
-
-  // 모바일: 1개씩 페이지네이션
-  const totalPages = Math.max(1, SCRIPTS.length);
+  const perPage = getScriptsPerPage();
+  const totalPages = Math.max(1, Math.ceil(SCRIPTS.length / perPage));
   scriptPage = Math.max(0, Math.min(scriptPage, totalPages - 1));
-  const s = SCRIPTS[scriptPage];
+  const pageScripts = SCRIPTS.slice(scriptPage * perPage, (scriptPage + 1) * perPage);
 
   const slideClass = dir > 0 ? 'script-slide-right' : dir < 0 ? 'script-slide-left' : '';
   grid.className = `scripts-grid ${slideClass}`;
   void grid.offsetWidth;
 
-  const btn = s.pdf
-    ? `<a href="${s.pdf}" target="_blank" rel="noopener" class="s-btn-paid">대본 읽기</a>`
-    : `<button class="s-btn-paid s-btn-disabled" disabled>준비 중</button>`;
-
-  grid.innerHTML = `
+  grid.innerHTML = pageScripts.map(s => {
+    const btn = s.pdf
+      ? `<a href="${s.pdf}" target="_blank" rel="noopener" class="s-btn-paid">대본 읽기</a>`
+      : `<button class="s-btn-paid s-btn-disabled" disabled>준비 중</button>`;
+    return `
     <div class="script-card">
       <div class="script-head">
         <p class="script-genre">${s.genre}</p>
@@ -344,6 +320,7 @@ function renderScripts(dir = 0) {
         <div class="script-actions">${btn}</div>
       </div>
     </div>`;
+  }).join('');
 
   const prev = document.getElementById('scriptsPrev');
   const next = document.getElementById('scriptsNext');
@@ -588,7 +565,7 @@ const navbar = document.getElementById('navbar');
 let _lastBooksBreak = getBooksPerPage();
 let _lastRelayBreak = getRelayPerPage();
 let _lastEventsBreak = getEventsPerPage();
-let _lastMobile = isMobile();
+let _lastScriptsBreak = getScriptsPerPage();
 window.addEventListener('resize', () => {
   const nb = getBooksPerPage();
   const nr = getRelayPerPage();
@@ -596,8 +573,8 @@ window.addEventListener('resize', () => {
   if (nb !== _lastBooksBreak)  { _lastBooksBreak  = nb; bookPage  = 0; renderBooks(); }
   if (nr !== _lastRelayBreak)  { _lastRelayBreak  = nr; relayPage = 0; renderRelayBooks(null); }
   if (ne !== _lastEventsBreak) { _lastEventsBreak = ne; eventPage = 0; renderEvents(null); }
-  const nm = isMobile();
-  if (nm !== _lastMobile) { _lastMobile = nm; scriptPage = 0; renderScripts(); }
+  const ns = getScriptsPerPage();
+  if (ns !== _lastScriptsBreak) { _lastScriptsBreak = ns; scriptPage = 0; renderScripts(); }
 }, { passive: true });
 
 window.addEventListener('scroll', () => {

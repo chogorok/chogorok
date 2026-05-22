@@ -564,9 +564,8 @@ section { padding: 100px 0; }
 }
 .scripts-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 22px;
-  max-width: 640px;
   margin: 0 auto 0;
 }
 
@@ -668,9 +667,9 @@ section { padding: 100px 0; }
 .s-btn-paid:hover { background: var(--beige); }
 .s-btn-disabled { opacity: .45; cursor: not-allowed; }
 .s-btn-disabled:hover { background: var(--white); }
-/* 희곡 페이지네이션 — 모바일에서만 표시 */
+/* 희곡 페이지네이션 */
 .scripts-pagination {
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
@@ -1193,9 +1192,8 @@ section { padding: 100px 0; }
   .events-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .events-pagination { display: flex; }
 
-  /* 희곡·대본 — 모바일 1열 + 페이지네이션 표시 */
+  /* 희곡·대본 — 모바일 1열 */
   .scripts-grid { grid-template-columns: 1fr; }
-  .scripts-pagination { display: flex; }
 
   /* 릴레이·이벤트 — 모바일 설명 줄임 & 더보기 버튼 */
   .desc-clamped {
