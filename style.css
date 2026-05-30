@@ -777,7 +777,19 @@ section { padding: 100px 0; }
   box-shadow: var(--shadow-sm);
   transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
-.ev-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.ev-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); cursor: pointer; }
+
+/* 이벤트 모달 */
+.ev-modal-img {
+  height: 200px;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  margin: -40px -40px 24px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f4f1ec;
+}
+.ev-modal-body { padding: 0; }
 .ev-img {
   height: 190px;
   position: relative;
@@ -1195,7 +1207,7 @@ section { padding: 100px 0; }
   /* 희곡·대본 — 모바일 1열 */
   .scripts-grid { grid-template-columns: 1fr; }
 
-  /* 릴레이·이벤트 — 모바일 설명 줄임 & 더보기 버튼 */
+  /* 릴레이 — 모바일 설명 줄임 & 더보기 버튼 */
   .desc-clamped {
     display: -webkit-box;
     -webkit-line-clamp: 3;

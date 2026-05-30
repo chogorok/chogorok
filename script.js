@@ -369,20 +369,21 @@ function renderEvents(events, dir = 0) {
 
   const isExternal = url => url.startsWith('http');
 
-  grid.innerHTML = pageEvents.map(e => `
-    <div class="ev-card${e.featured ? ' ev-featured' : ''}">
+  // 현재 페이지 이벤트의 전체 인덱스 계산 (모달용)
+  const pageOffset = perPage === Infinity ? 0 : eventPage * perPage;
+
+  grid.innerHTML = pageEvents.map((e, i) => `
+    <div class="ev-card${e.featured ? ' ev-featured' : ''}" onclick="openEventModal(${pageOffset + i})" role="button" tabindex="0">
       <div class="ev-img" style="${imgStyle(e)}">
         ${e.badge ? `<span class="${badgeClass(e.badge_type)}">${e.badge}</span>` : ''}
       </div>
       <div class="ev-body">
         <span class="ev-type">${e.type}</span>
         <h3>${e.title}</h3>
-        <p class="ev-desc desc-clamped">${e.desc}</p>
-        <button class="desc-toggle" onclick="toggleDesc(this)">더보기</button>
+        <p class="ev-desc">${e.desc}</p>
         <div class="ev-details">
           ${e.details.map(d => `<span>${d}</span>`).join('')}
         </div>
-        <a href="${e.btn_link}" class="btn btn-${e.btn_style} btn-sm"${isExternal(e.btn_link) ? ' target="_blank" rel="noopener"' : ''}>${e.btn_text}</a>
       </div>
     </div>
   `).join('');
@@ -622,6 +623,35 @@ const io = new IntersectionObserver(entries => {
     }
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+// ===== 이벤트 모달 =====
+
+function openEventModal(idx) {
+  const e = eventsData[idx];
+  if (!e) return;
+
+  const isExternal = e.btn_link.startsWith('http');
+  const btnAttr = isExternal ? ' target="_blank" rel="noopener"' : '';
+  const imgStyle = e.image
+    ? `background-image:url('${e.image}');background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#f4f1ec`
+    : `background:linear-gradient(160deg,${e.color1},${e.color2})`;
+
+  const content = document.getElementById('modalContent');
+  content.innerHTML = `
+    <div class="ev-modal-img" style="${imgStyle}"></div>
+    <div class="ev-modal-body">
+      <span class="ev-type" style="color:var(--green);font-size:.72rem;letter-spacing:.15em;font-weight:600;text-transform:uppercase;">${e.type}</span>
+      <h2 class="modal-title" style="margin:8px 0 14px;">${e.title}</h2>
+      <p style="font-size:.92rem;color:var(--text-md);line-height:1.85;margin-bottom:18px;">${e.desc}</p>
+      <div class="ev-details" style="margin-bottom:24px;flex-wrap:wrap;gap:10px;">
+        ${e.details.map(d => `<span style="font-size:.82rem;color:var(--text-lt);">${d}</span>`).join('')}
+      </div>
+      <a href="${e.btn_link}" class="btn btn-primary" style="width:100%;text-align:center;display:block;"${btnAttr}>${e.btn_text}</a>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
 
 // ===== 더보기 토글 =====
 
