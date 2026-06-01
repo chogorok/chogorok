@@ -73,8 +73,8 @@ const COFFEE = [
   { name: '드립 커피',        desc: 'HOT / ICE', price: '5,000' },
   { name: '디카페인 드립커피', desc: 'HOT / ICE', price: '5,500' },
   { cat: '음료' },
-  { name: '사과농장 조카 사과주스', desc: '', price: '3,800' },
-  { name: '사과농장 조카 에이드',   desc: '', price: '5,000' },
+  { name: '사과농장 조카 사과주스', desc: '', price: '5,000' },
+  { name: '사유 에이드',           desc: '', price: '6,500' },
   { cat: '차' },
   { name: '캐모마일', desc: 'HOT', price: '5,500' },
 ];
