@@ -10,16 +10,6 @@ const SHEET_RELAY   = SHEET_BASE + '1886435550';
 
 // ===== DEFAULT DATA (fallback) =====
 
-let BOOKS = [
-  { id:1, title:'이것이 내 처음이다', author:'김서연', price:14000, cat:'debut', tag:'데뷔작', c:['#2D4A2D','#3D7A3D'], desc:'단편소설집' },
-  { id:2, title:'처음 쓴 편지들',     author:'박지우', price:12000, cat:'indie', tag:'독립출판', c:['#5C4033','#8B6555'], desc:'에세이'    },
-  { id:3, title:'초고',               author:'이다은', price:16000, cat:'debut', tag:'데뷔작', c:['#1C2D4A','#2D4A7A'], desc:'시집'      },
-  { id:4, title:'어느 첫날의 기록',   author:'정민준', price:11000, cat:'indie', tag:'독립출판', c:['#4A2D5C','#7A4A8B'], desc:'산문집'    },
-  { id:5, title:'파종',               author:'오수진', price:18000, cat:'first', tag:'초판본', c:['#3A4A1C','#6B8B2D'], desc:'장편소설'   },
-  { id:6, title:'무대 밖에서',         author:'최연우', price:13000, cat:'debut', tag:'데뷔작', c:['#4A2D1C','#8B5A2D'], desc:'에세이'    },
-  { id:7, title:'첫 계절',             author:'윤하늘', price:15000, cat:'first', tag:'초판본', c:['#2D3A5C','#4A5C8B'], desc:'시집'      },
-  { id:8, title:'시작하는 글들',       author:'한수민', price:10000, cat:'indie', tag:'독립출판', c:['#4A4A1C','#8B8B2D'], desc:'잡지'     },
-];
 
 let SCRIPTS = [
   { id: 1, title: '첫 번째 겨울',        genre: '희곡',   desc: '"처음 네 이름을 불렀을 때, 내 목소리가 낯설었다."', pdf: '' },
@@ -217,71 +207,6 @@ function mapScripts(rows) {
     desc:  r['설명']      || r.desc  || '',
     pdf:   r['대본 읽기'] || r.pdf   || '',
   })).filter(s => s.title);
-}
-
-// ===== RENDER BOOKS =====
-
-function getBooksPerPage() { return window.innerWidth <= 480 ? 4 : 8; }
-let bookPage = 0;
-
-function renderBooks(dir = 0) {
-  const grid = document.getElementById('booksGrid');
-  if (!grid) return;
-
-  const perPage = getBooksPerPage();
-  const totalPages = Math.max(1, Math.ceil(BOOKS.length / perPage));
-  bookPage = Math.max(0, Math.min(bookPage, totalPages - 1));
-  const pageBooks = BOOKS.slice(bookPage * perPage, (bookPage + 1) * perPage);
-
-  const coverStyle = b => b.image
-    ? `background-image:url('${b.image}');background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#f4f1ec`
-    : `background:linear-gradient(155deg,${b.c[0]},${b.c[1]})`;
-
-  // 슬라이드 애니메이션
-  const slideClass = dir > 0 ? 'slide-from-right' : dir < 0 ? 'slide-from-left' : '';
-  grid.className = `books-grid ${slideClass}`;
-  void grid.offsetWidth; // reflow
-
-  grid.innerHTML = pageBooks.map(b => `
-    <div class="book-card fade-up">
-      <div class="book-cover" style="${coverStyle(b)}">
-        <div class="book-spine"></div>
-        ${!b.image ? `<div class="book-cover-inner">
-          <p class="book-cover-title">${b.title}</p>
-          <p class="book-cover-author">${b.author}</p>
-        </div>` : ''}
-      </div>
-      <div class="book-info">
-        <p class="book-info-title">${b.title}</p>
-        <p class="book-info-meta">${b.author}</p>
-        <p class="book-info-desc">${b.desc}</p>
-        <div class="book-footer">
-          <span class="book-price">₩${b.price.toLocaleString()}</span>
-        </div>
-      </div>
-    </div>
-  `).join('');
-
-  requestAnimationFrame(() => {
-    grid.querySelectorAll('.fade-up').forEach((el, i) => {
-      setTimeout(() => el.classList.add('in'), i * 60);
-    });
-  });
-
-  // 페이지네이션 업데이트
-  const prev = document.getElementById('booksPrev');
-  const next = document.getElementById('booksNext');
-  const indicator = document.getElementById('booksPageIndicator');
-  const pagination = document.getElementById('booksPagination');
-  if (prev) prev.disabled = bookPage === 0;
-  if (next) next.disabled = bookPage >= totalPages - 1;
-  if (indicator) indicator.textContent = totalPages > 1 ? `${bookPage + 1} / ${totalPages}` : '';
-  if (pagination) pagination.style.display = totalPages <= 1 ? 'none' : 'flex';
-}
-
-function changeBookPage(dir) {
-  bookPage += dir;
-  renderBooks(dir);
 }
 
 // ===== RENDER SCRIPTS =====
@@ -563,18 +488,15 @@ function rotateQuote() {
 const navbar = document.getElementById('navbar');
 
 // 화면 크기 변경 시 페이지당 항목 수가 달라지면 재렌더
-let _lastBooksBreak = getBooksPerPage();
 let _lastRelayBreak = getRelayPerPage();
 let _lastEventsBreak = getEventsPerPage();
 let _lastScriptsBreak = getScriptsPerPage();
 window.addEventListener('resize', () => {
-  const nb = getBooksPerPage();
   const nr = getRelayPerPage();
   const ne = getEventsPerPage();
-  if (nb !== _lastBooksBreak)  { _lastBooksBreak  = nb; bookPage  = 0; renderBooks(); }
-  if (nr !== _lastRelayBreak)  { _lastRelayBreak  = nr; relayPage = 0; renderRelayBooks(null); }
-  if (ne !== _lastEventsBreak) { _lastEventsBreak = ne; eventPage = 0; renderEvents(null); }
   const ns = getScriptsPerPage();
+  if (nr !== _lastRelayBreak)   { _lastRelayBreak   = nr; relayPage  = 0; renderRelayBooks(null); }
+  if (ne !== _lastEventsBreak)  { _lastEventsBreak  = ne; eventPage  = 0; renderEvents(null); }
   if (ns !== _lastScriptsBreak) { _lastScriptsBreak = ns; scriptPage = 0; renderScripts(); }
 }, { passive: true });
 
@@ -669,7 +591,6 @@ function nl(str) { return (str || '').replace(/\n/g, '<br>'); }
 
 document.addEventListener('DOMContentLoaded', async () => {
   // 1. 먼저 기본 데이터로 초기 렌더링
-  renderBooks();
   renderScripts();
   renderEvents(EVENTS_DEFAULT);
   renderRelayBooks(RELAY_DEFAULT);
@@ -677,31 +598,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderMenu(DRINKS, 'drinkMenu');
 
   // 2. 구글 시트 CSV 병렬 fetch
-  const [booksCSV, eventsCSV, scriptsCSV, relayCSV] = await Promise.all([
-    fetchCSV(SHEET_BOOKS),
+  const [eventsCSV, scriptsCSV, relayCSV] = await Promise.all([
     fetchCSV(SHEET_EVENTS),
     fetchCSV(SHEET_SCRIPTS),
     fetchCSV(SHEET_RELAY),
   ]);
 
-  // 3. 도서 업데이트
-  if (booksCSV) {
-    const rows = parseCSV(booksCSV);
-    const mapped = mapBooks(rows);
-    if (mapped.length) {
-      BOOKS = mapped;
-      renderBooks();
-    }
-  }
-
-  // 4. 이벤트 업데이트
+  // 3. 이벤트 업데이트
   if (eventsCSV) {
     const rows = parseCSV(eventsCSV);
     const mapped = mapEvents(rows);
     if (mapped.length) renderEvents(mapped);
   }
 
-  // 5. 희곡 업데이트
+  // 4. 희곡 업데이트
   if (scriptsCSV) {
     const rows = parseCSV(scriptsCSV);
     const mapped = mapScripts(rows);
