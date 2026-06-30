@@ -75,8 +75,8 @@
       </button>
       <ul class="nav-links" id="navLinks">
         <li><a href="#home">홈</a></li>
-        <li><a href="#relay">릴레이 독서</a></li>
         <li><a href="#events">이벤트</a></li>
+        <li><a href="#relay">릴레이 독서</a></li>
         <li><a href="#scripts">희곡·대본</a></li>
         <li><a href="#cafe">카페</a></li>
         <li><a href="#location">오시는 길</a></li>
@@ -133,6 +133,23 @@
   </section>
 
 
+  <!-- ===== EVENTS ===== -->
+  <section id="events" class="events-section">
+    <div class="container">
+      <div class="sec-head">
+        <p class="label">이벤트</p>
+        <h2>초고록의 시간들</h2>
+        <p class="sec-desc">책방이 살아 숨쉬는 순간들.</p>
+      </div>
+      <div class="events-grid" id="eventsGrid"></div>
+      <div class="events-pagination" id="eventsPagination">
+        <button class="relay-page-btn" id="eventsPrev" onclick="changeEventPage(-1)">&#8592;</button>
+        <span class="relay-page-indicator" id="eventsPageIndicator"></span>
+        <button class="relay-page-btn" id="eventsNext" onclick="changeEventPage(1)">&#8594;</button>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== RELAY READING ===== -->
   <section id="relay" class="relay-section">
     <div class="container">
@@ -148,23 +165,6 @@
         <button class="relay-page-btn" id="relayNext" onclick="changeRelayPage(1)">&#8594;</button>
       </div>
       <p class="relay-note">📌 대여 기간은 2주이며, 반납 후 다음 예약자에게 전달됩니다. 문의: <a href="mailto:rlatmdtn8149@naver.com">rlatmdtn8149@naver.com</a></p>
-    </div>
-  </section>
-
-  <!-- ===== EVENTS ===== -->
-  <section id="events" class="events-section">
-    <div class="container">
-      <div class="sec-head">
-        <p class="label">이벤트</p>
-        <h2>초고록의 시간들</h2>
-        <p class="sec-desc">책방이 살아 숨쉬는 순간들.</p>
-      </div>
-      <div class="events-grid" id="eventsGrid"></div>
-      <div class="events-pagination" id="eventsPagination">
-        <button class="relay-page-btn" id="eventsPrev" onclick="changeEventPage(-1)">&#8592;</button>
-        <span class="relay-page-indicator" id="eventsPageIndicator"></span>
-        <button class="relay-page-btn" id="eventsNext" onclick="changeEventPage(1)">&#8594;</button>
-      </div>
     </div>
   </section>
 
