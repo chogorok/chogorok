@@ -77,12 +77,6 @@ const DRINKS = [
   { name: '하이네켄 제로',     desc: '330ml', price: '6,900' },
 ];
 
-const QUOTES = [
-  { text: '"나는 처음이 좋다.\n처음은 언제나 솔직하니까."', attr: '— 초고록 운영자 노트' },
-  { text: '"소설의 첫 문장은\n작가의 목소리를 가장 날것으로 담고 있다."', attr: '— 큐레이터 메모' },
-  { text: '"데뷔작 앞에서는\n모두가 동등하게 처음이다."', attr: '— 초고록 책방 안내문' },
-  { text: '"초고를 쓸 용기가\n결국 책 한 권이 된다."', attr: '— 서가 메모지' },
-];
 
 const DEFAULT_COLORS = [
   ['#2D4A2D','#3D7A3D'], ['#5C4033','#8B6555'], ['#1C2D4A','#2D4A7A'],
@@ -468,20 +462,6 @@ function toast(msg) {
   el._timer = setTimeout(() => el.classList.remove('show'), 3000);
 }
 
-// ===== ROTATING QUOTES =====
-
-let quoteIdx = 0;
-function rotateQuote() {
-  const el = document.getElementById('heroQuote');
-  if (!el) return;
-  const q = QUOTES[quoteIdx % QUOTES.length];
-  el.classList.remove('visible');
-  setTimeout(() => {
-    el.innerHTML = `${nl(q.text)}<span class="hero-quote-book">${q.attr}</span>`;
-    el.classList.add('visible');
-  }, 400);
-  quoteIdx++;
-}
 
 // ===== NAV =====
 
@@ -634,7 +614,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     io.observe(el);
   });
 
-  // 7. 인용구 로테이션
-  rotateQuote();
-  setInterval(rotateQuote, 5000);
 });

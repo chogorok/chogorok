@@ -255,30 +255,20 @@ section { padding: 100px 0; }
 }
 .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-.hero-quote-wrap {
+.hero-order-wrap {
   position: relative;
   z-index: 1;
   margin-top: 40px;
-  min-height: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
-.hero-quote {
+.hero-order-desc {
   font-family: var(--serif);
-  font-size: .85rem;
-  color: var(--text-lt);
-  font-style: italic;
-  line-height: 1.7;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity .6s ease, transform .6s ease;
-}
-.hero-quote.visible { opacity: 1; transform: translateY(0); }
-.hero-quote-book {
-  display: block;
-  font-size: .72rem;
-  font-style: normal;
-  letter-spacing: .08em;
-  margin-top: 4px;
-  color: var(--beige-dk);
+  font-size: .9rem;
+  color: var(--text-md);
+  letter-spacing: .04em;
 }
 
 .hero-meta {
