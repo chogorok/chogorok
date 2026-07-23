@@ -21,8 +21,8 @@ const EVENTS_DEFAULT = [
   {
     featured: true, badge: '진행중', badge_type: '',
     color1: '#1C4A1C', color2: '#2D6A2D',
-    type: '릴레이 도서', title: '이번 달의 처음',
-    desc: '한 권의 책이 여러 손을 거쳐 읽힙니다. 읽은 후 느낀 \'처음의 감각\'을 책 안에 메모로 남겨 다음 독자에게 전달하는 릴레이.',
+    type: '교환 도서', title: '이번 달의 처음',
+    desc: '한 권의 책이 여러 손을 거쳐 읽힙니다. 읽은 후 느낀 \'처음의 감각\'을 책 안에 메모로 남겨 다음 독자에게 전달하는 교환 독서.',
     details: ['📅 매월 1일 시작', '👥 5명 정원', '💰 무료'],
     btn_text: '신청하기', btn_link: 'mailto:rlatmdtn8149@naver.com', btn_style: 'primary',
   },
