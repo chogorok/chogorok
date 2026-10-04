@@ -230,7 +230,7 @@
       '    <p class="about-hanja">草稿錄</p>' +
       '    <p class="about-slogan">오늘도 우리는<br>초고를 기록하는 중입니다.</p>' +
       '    <div class="about-group">' +
-      '      <p class="about-text">초벌로 쓴 원고를 뜻하는 <span class="nobreak">\'초고(草稿)\'</span>와 기록할 <span class="nobreak">\'록(錄)\'</span>.</p>' +
+      '      <p class="about-text">초벌로 쓴 원고를 뜻하는 <span class="nobreak">\'초고(草稿)\'</span>와<br><span class="nobreak">기록할 \'록(錄)\'.</span></p>' +
       '      <p class="about-text"><span class="nobreak">\'초고를 기록하다\'</span>를 뜻하는 책방 초고록입니다.</p>' +
       "    </div>" +
       '    <div class="about-group">' +
