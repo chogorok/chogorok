@@ -510,8 +510,15 @@ a { color: inherit; text-decoration: none; }
   word-break: keep-all;
 }
 .event-card .ev-date {
+  display: block;
   font-size: 12px;
   opacity: 0.85;
+}
+.event-card .ev-time {
+  display: block;
+  font-size: 12px;
+  opacity: 0.85;
+  margin-top: 1px;
 }
 .event-card .ev-meta {
   display: flex;

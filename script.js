@@ -441,7 +441,8 @@
             '<div class="card-content">' +
               (d.type ? '<span class="type-chip">' + escapeHtml(d.type) + "</span>" : "") +
               '<h3 class="ev-title">' + escapeHtml(d.title) + "</h3>" +
-              (d.date ? '<span class="ev-date">' + escapeHtml(d.date) + (d.time ? " · " + escapeHtml(d.time) : "") + "</span>" : "") +
+              (d.date ? '<span class="ev-date">' + escapeHtml(d.date) + "</span>" : "") +
+              (d.time ? '<span class="ev-time">' + escapeHtml(d.time) + "</span>" : "") +
               '<div class="ev-meta">' +
                 (isFull
                   ? '<span class="ev-line ev-full">마감</span>'
