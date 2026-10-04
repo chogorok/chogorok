@@ -102,6 +102,7 @@
     applied: ["신청 현황", "신청현황", "신청인원"],
     type: ["유형", "분류", "장르", "카테고리"],
     date: ["날짜", "일정", "기간"],
+    time: ["시간"],
     author: ["저자", "작가", "글쓴이"],
     publisher: ["출판사"],
     condition: ["교환", "상태"]
@@ -440,7 +441,7 @@
             '<div class="card-content">' +
               (d.type ? '<span class="type-chip">' + escapeHtml(d.type) + "</span>" : "") +
               '<h3 class="ev-title">' + escapeHtml(d.title) + "</h3>" +
-              (d.date ? '<span class="ev-date">' + escapeHtml(d.date) + "</span>" : "") +
+              (d.date ? '<span class="ev-date">' + escapeHtml(d.date) + (d.time ? " · " + escapeHtml(d.time) : "") + "</span>" : "") +
               '<div class="ev-meta">' +
                 (isFull
                   ? '<span class="ev-line ev-full">마감</span>'
@@ -481,6 +482,7 @@
       var isFull = cap !== null && applied !== null && applied >= cap && cap > 0;
       var facts = [];
       if (d.date) facts.push(["날짜", d.date]);
+      if (d.time) facts.push(["시간", d.time]);
       if (d.price) facts.push(["가격", d.price]);
       if (cap !== null) facts.push(["정원", cap + "명"]);
       if (applied !== null) facts.push(["신청 현황", applied + "명"]);
