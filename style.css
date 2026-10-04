@@ -205,6 +205,14 @@ a { color: inherit; text-decoration: none; }
   word-break: keep-all;
 }
 .about-text .nobreak { white-space: nowrap; }
+.about-oneline {
+  white-space: nowrap;
+  font-size: 11px;
+  letter-spacing: -0.01em;
+}
+@media (min-width: 420px) {
+  .about-oneline { font-size: 14px; letter-spacing: normal; }
+}
 .about-programs {
   display: flex;
   gap: 10px;
