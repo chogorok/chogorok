@@ -267,6 +267,8 @@
     { key: "unavailable", label: "대여중" }
   ];
   var exchangeFilter = "all";
+  var exchangePage = 0;
+  var EXCHANGE_PER_PAGE = 12;
 
   function matchesFilter(d, filter) {
     if (filter === "all") return true;
@@ -308,6 +310,7 @@
           tabsEl.querySelectorAll("[data-tab]").forEach(function (btn) {
             btn.addEventListener("click", function () {
               exchangeFilter = btn.getAttribute("data-tab");
+              exchangePage = 0;
               paintTabs();
               paintGrid();
             });
@@ -315,12 +318,25 @@
         }
 
         function paintGrid() {
-          var html = '<div class="shelf-grid">';
-          var shown = 0;
+          var filtered = [];
           data.forEach(function (row, idx) {
             var d = extract(row);
             if (!matchesFilter(d, exchangeFilter)) return;
-            shown++;
+            filtered.push({ d: d, idx: idx });
+          });
+
+          if (!filtered.length) {
+            body.innerHTML = '<p class="state-msg">해당하는 책이 없습니다.</p>';
+            return;
+          }
+
+          var totalPages = Math.ceil(filtered.length / EXCHANGE_PER_PAGE);
+          exchangePage = Math.max(0, Math.min(exchangePage, totalPages - 1));
+          var pageItems = filtered.slice(exchangePage * EXCHANGE_PER_PAGE, (exchangePage + 1) * EXCHANGE_PER_PAGE);
+
+          var html = '<div class="shelf-grid">';
+          pageItems.forEach(function (item) {
+            var d = item.d, idx = item.idx;
             var tone = spineTone(d.title + idx);
             var textColor = toneTextColor(tone);
             var unavailable = isUnavailable(d.condition);
@@ -339,15 +355,33 @@
               "</button>";
           });
           html += "</div>";
-          if (!shown) {
-            body.innerHTML = '<p class="state-msg">해당하는 책이 없습니다.</p>';
-            return;
+
+          if (totalPages > 1) {
+            html += '<div class="shelf-pagination">' +
+              '<button class="shelf-page-btn" id="exchange-prev" ' + (exchangePage === 0 ? "disabled" : "") + '>&#8592;</button>' +
+              '<span class="shelf-page-indicator">' + (exchangePage + 1) + ' / ' + totalPages + '</span>' +
+              '<button class="shelf-page-btn" id="exchange-next" ' + (exchangePage >= totalPages - 1 ? "disabled" : "") + '>&#8594;</button>' +
+              '</div>';
           }
+
           body.innerHTML = html;
           body.querySelectorAll("[data-detail]").forEach(function (btn) {
             btn.addEventListener("click", function () {
               navigate("/exchange/" + btn.getAttribute("data-detail"));
             });
+          });
+
+          var prevBtn = document.getElementById("exchange-prev");
+          var nextBtn = document.getElementById("exchange-next");
+          if (prevBtn) prevBtn.addEventListener("click", function () {
+            exchangePage--;
+            paintGrid();
+            body.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+          if (nextBtn) nextBtn.addEventListener("click", function () {
+            exchangePage++;
+            paintGrid();
+            body.scrollIntoView({ behavior: "smooth", block: "start" });
           });
         }
 
